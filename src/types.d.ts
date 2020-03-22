@@ -1,0 +1,35 @@
+export interface DiaryEntry {
+  id: number;
+  time: Date;
+  from: string;
+  to: string;
+  content: string;
+  rep?: Rep;
+}
+
+export interface Diary {
+  id: number;
+  name: string;
+  createdAt: Date;
+  entries: DiaryEntry[];
+}
+
+type RepType = 'MIST' | 'CONTACTREP' | 'JAMREP' | 'QUICKSITREP' | 'INTREP';
+
+export interface Rep {
+  name: RepType;
+}
+
+export interface MISTRep extends Rep {
+  name: 'MIST';
+  mechanism: string;
+  injuries: string;
+  signs: {
+    a: string;
+    b: string;
+    c: string;
+    d: string;
+    e: string;
+  };
+  treatment: string;
+}
