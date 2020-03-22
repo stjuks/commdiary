@@ -13,23 +13,26 @@ const DiaryList: React.FC = observer(() => {
   const uiStore = useContext(UIStoreContext);
 
   return (
-    <DiaryListContainer>
-      <ListContainer>
-        {diaryStore.diaries.map(diary => (
-          <DiaryItem
-            diary={diary}
-            setActive={diaryStore.setActiveDiary}
-            onDelete={diaryStore.deleteDiary}
-            key={diary.id}
-          />
-        ))}
-      </ListContainer>
-      <Button
-        className="add-diary-btn"
-        title="+ Lisa päevik"
-        onClick={() => uiStore.openModal(<DiaryForm />)}
-      />
-    </DiaryListContainer>
+    <>
+      <h1 className="modal-title">Päevikud</h1>
+      <DiaryListContainer className="modal-body">
+        <ListContainer>
+          {diaryStore.diaries.map(diary => (
+            <DiaryItem
+              diary={diary}
+              setActive={diaryStore.setActiveDiary}
+              onDelete={diaryStore.deleteDiary}
+              key={diary.id}
+            />
+          ))}
+        </ListContainer>
+        <Button
+          className="add-diary-btn"
+          title="+ Lisa päevik"
+          onClick={() => uiStore.openModal(<DiaryForm />)}
+        />
+      </DiaryListContainer>
+    </>
   );
 });
 
@@ -47,15 +50,17 @@ const DiaryItem: React.FC<DiaryItemProps> = ({ diary, setActive, onDelete }) => 
     onDelete(diary.id);
   };
 
+  console.log(isHovering);
+
   return (
     <DiaryItemContainer
-      tabIndex={0}
-      onClick={() => setActive(diary.id)}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      <div className="diary-name">{diary.name}</div>
-      <div className="entry-count">({diary.entries.length})</div>
+      <button className="diary-item" onClick={() => setActive(diary.id)}>
+        <div className="diary-name">{diary.name}</div>
+        <div className="entry-count">({diary.entries.length})</div>
+      </button>
       {isHovering && (
         <button className="btn del-btn" onClick={handleDelete}>
           <FiTrash2 />

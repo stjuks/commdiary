@@ -113,6 +113,10 @@ select {
   appearance: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 select:hover {
   cursor: pointer;
 }

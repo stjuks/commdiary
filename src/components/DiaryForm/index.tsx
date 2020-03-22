@@ -30,7 +30,7 @@ const DiaryForm: React.FC = observer(() => {
       onSubmit={handleSubmit}
     >
       {formikProps => (
-        <DiaryFormContainer onSubmit={formikProps.handleSubmit}>
+        <DiaryFormContainer onSubmit={formikProps.handleSubmit} className="modal-body">
           <TextInput name="name" label="Päeviku nimi" />
           <Button type="submit" title="Lisa päevik" />
         </DiaryFormContainer>

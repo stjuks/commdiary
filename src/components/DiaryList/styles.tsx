@@ -13,30 +13,37 @@ export const DiaryListContainer = styled.div`
   `}
 `;
 
-export const ListContainer = styled.ul``;
+export const ListContainer = styled.div``;
 
-export const DiaryItemContainer = styled.li`
+export const DiaryItemContainer = styled.div`
   ${({ theme }) => `
-    color: ${theme.colors.white};
-    padding: 1rem;
-    padding-right: 3rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-weight: 500;
+    position: relative;
     display: flex;
     align-items: center;
-    position: relative;
-    margin-bottom: 0.25rem;
-    outline: none;
+    color: ${theme.colors.white};
+
+    .diary-item {
+      width: 100%;
+      display: flex;
+      padding: 1rem;
+      padding-right: 3rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.25rem;
+      outline: none;
+
+      :hover, :focus {
+        background: ${theme.colors.accent.opacity(0.05)};
+      }
+    }
 
     :last-child {
       margin-bottom: 1rem;
     }
 
-    :hover, :focus {
-      background: ${theme.colors.accent.opacity(0.05)};
-    }
-    
     .diary-name {
       white-space: nowrap;
     }
