@@ -76,6 +76,23 @@ class DiaryStore {
     saveToLocalStorage('activeDiaryId', diaryId);
   };
 
+  @action
+  downloadDiaries = async (diaryIds: number[]) => {
+    const diaries = this.diaries.filter(diary => diaryIds.includes(diary.id));
+
+    const fileName = 'Sidepäevikud.json';
+
+    const json = JSON.stringify(diaries);
+    const blob = new Blob([json], { type: 'application/json' });
+    const href = await URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = href;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   @computed
   get activeDiary() {
     return this.diaries.find(diary => diary.id === this.activeDiaryId);

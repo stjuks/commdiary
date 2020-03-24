@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 
 import { HeaderContainer } from './styles';
-import { FiPlusCircle, FiList } from 'react-icons/fi';
+import { FiPlusCircle, FiList, FiDownload, FiUpload } from 'react-icons/fi';
 import DiaryForm from '../DiaryForm';
+import ExportForm from '../ExportForm';
 import DiaryList from '../DiaryList';
 import UIStoreContext from '@/stores/UIStore';
 import DiaryStoreContext from '@/stores/DiaryStore';
@@ -22,6 +23,9 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         <h2>{title}</h2>
       </div>
       <div className="action-bar">
+        <button className="btn export-btn" onClick={() => uiStore.openModal(<ExportForm />)}>
+          <FiUpload />
+        </button>
         <button className="btn list-btn" onClick={() => uiStore.openModal(<DiaryList />)}>
           <FiList />
         </button>

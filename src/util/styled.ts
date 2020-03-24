@@ -22,7 +22,8 @@ export const theme = {
     white: new Color('#FAFAFC'),
     primary: new Color('#1C1B24'),
     accent: new Color('#4B67FF'),
-    danger: new Color('#EB4848')
+    danger: new Color('#EB4848'),
+    black: new Color('#000')
   },
   devices: {
     mobileS: '320px',

@@ -9,6 +9,9 @@ export const HeaderContainer = styled.div`
     height: 3rem;
     flex-shrink: 0;
 
+    svg {
+      stroke-width: 1.5;
+    }
 
     h2 {
       font-size: 1.5rem;
@@ -28,7 +31,31 @@ export const HeaderContainer = styled.div`
       .btn {
         display: flex;
         font-size: 2rem;
+        height: 3rem;
+        width: 3rem;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
+        position: relative;
+
+        :hover:before,
+        :focus:before {
+          content: '';
+          transform: translate(-50%, -50%);
+          top: 50%;
+          left: 50%;
+          position: absolute;
+          border-radius: 50%;
+          height: 100%;
+          width: 100%;
+          z-index: -1;
+          background: ${theme.colors.accent.opacity(0.1)};
+        }
+      }
+
+      .export-btn svg {
+        box-sizing: border-box;
+        padding: 0.125rem;
       }
 
       .btn:not(:last-child) {

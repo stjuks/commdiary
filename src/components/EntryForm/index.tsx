@@ -107,6 +107,13 @@ const EntryForm: React.FC = observer(() => {
         <EntryFormContainer onSubmit={formikProps.handleSubmit}>
           <MainFormFields>
             <div className="short-fields">
+              <SelectInput
+                label="REP"
+                name="rep"
+                options={repOptions}
+                optionLabel={option => option.type}
+                style={{ width: '5rem' }}
+              />
               <TextInput
                 name="to"
                 label="Kellele"
@@ -119,13 +126,6 @@ const EntryForm: React.FC = observer(() => {
                 label="Kellelt"
                 style={{ width: '5rem' }}
                 onKeyPress={selectRecipientsWithArrows}
-              />
-              <SelectInput
-                label="REP"
-                name="rep"
-                options={repOptions}
-                optionLabel={option => option.type}
-                style={{ width: '5rem' }}
               />
             </div>
             <div className="content-field">
