@@ -13,7 +13,11 @@ export const DiaryListContainer = styled.div`
   `}
 `;
 
-export const ListContainer = styled.div``;
+export const ListContainer = styled.div`
+  max-height: 20rem;
+  overflow: auto;
+  margin-bottom: 1rem;
+`;
 
 export const DiaryItemContainer = styled.div`
   ${({ theme }) => `
@@ -32,7 +36,6 @@ export const DiaryItemContainer = styled.div`
       font-weight: 500;
       display: flex;
       align-items: center;
-      margin-bottom: 0.25rem;
       outline: none;
 
       :hover, :focus {
@@ -40,9 +43,7 @@ export const DiaryItemContainer = styled.div`
       }
     }
 
-    :last-child {
-      margin-bottom: 1rem;
-    }
+    :not(:last-child) { margin-bottom: 0.25rem; }
 
     .diary-name {
       white-space: nowrap;

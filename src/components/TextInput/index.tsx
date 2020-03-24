@@ -6,7 +6,7 @@ interface TextInputProps {
   name: string;
   label: string;
   style?: CSSProperties;
-  onKeyPress?: (keysPressed: { [key: number]: boolean }, form: FormikProps<any>) => any;
+  onKeyPress?: (keysPressed: { [key: number]: boolean }, form: FormikProps<any>, event: KeyboardEvent) => any;
   onKeyDown?: (event: KeyboardEvent, form: FormikProps<any>) => any;
   ref?: React.RefObject<HTMLInputElement>;
 }
@@ -20,7 +20,7 @@ const TextInputComponent: React.FC<TextInputProps & FieldProps> = forwardRef(
       if (onKeyPress) {
         const newKeysPressed = { ...keysPressed, [event.keyCode]: true };
         setKeysPressed(newKeysPressed);
-        onKeyPress(newKeysPressed, form);
+        onKeyPress(newKeysPressed, form, event);
       }
       if (onKeyDown) onKeyDown(event, form);
     };

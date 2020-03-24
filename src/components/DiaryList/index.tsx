@@ -50,8 +50,6 @@ const DiaryItem: React.FC<DiaryItemProps> = ({ diary, setActive, onDelete }) => 
     onDelete(diary.id);
   };
 
-  console.log(isHovering);
-
   return (
     <DiaryItemContainer
       onMouseEnter={() => setHovering(true)}

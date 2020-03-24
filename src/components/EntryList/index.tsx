@@ -6,17 +6,22 @@ import { DiaryEntry } from '@/types';
 import { EntryListContainer, EntryItemContainer } from './styles';
 import { observer } from 'mobx-react-lite';
 import DiaryStoreContext from '@/stores/DiaryStore';
+import { usePrevious } from '@/util/hooks';
 
 const EntryList: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
 
-  const listLength = diaryStore.activeDiary?.entries.length;
+  const listLength = diaryStore.activeDiary?.entries.length || 0;
+
+  const prevLength = usePrevious(listLength) || 0;
 
   useEffect(() => {
-    animateScroll.scrollToBottom({
-      containerId: 'entry-list-container',
-      duration: 200
-    });
+    if (listLength > prevLength) {
+      animateScroll.scrollToBottom({
+        containerId: 'entry-list-container',
+        duration: 200
+      });
+    }
   }, [listLength]);
 
   return (
@@ -93,9 +98,9 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit 
           suppressContentEditableWarning
           onBlur={handleEdit}
         >
-          {entry.content}
+          {entry.content || '-'}
         </div>
-        {entry.rep && <button className="rep-name">{entry.rep.name}</button>}
+        {entry.rep && <button className="rep-name">{entry.rep.type}</button>}
       </div>
     </EntryItemContainer>
   );

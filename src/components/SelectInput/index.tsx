@@ -1,18 +1,15 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 import { SelectInputContainer } from './styles';
 import { FieldProps, Field } from 'formik';
 import { isJson } from '@/util/helpers';
 
-interface SelectOption {
-  label: string;
-  value: any;
-}
-
 interface SelectInputProps {
   name: string;
   label: string;
-  options: SelectOption[];
+  options: any[];
+  optionLabel: (option: any) => string;
+  optionValue?: (option: any) => any;
   style?: React.CSSProperties;
 }
 
@@ -21,8 +18,11 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
   form,
   field,
   options,
+  optionLabel,
+  optionValue,
   style
 }) => {
+  const [value, setValue] = useState<any>(undefined);
   const errorMsg = form.errors[field.name];
 
   const parseValue = (value: any) => {
@@ -36,6 +36,7 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
 
+    setValue(value);
     form.setFieldValue(field.name, parseValue(value));
   };
 
@@ -45,11 +46,14 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
         {label}
       </label>
       <div className="input-field">
-        <select onChange={handleChange} defaultValue={undefined} id={field.name}>
-          <option value={undefined} selected={field.value === undefined}></option>
+        <select onChange={handleChange} defaultValue={undefined} id={field.name} value={!field.value || value}>
+          <option value=""></option>
           {options.map(option => (
-            <option value={JSON.stringify(option.value)} key={option.label}>
-              {option.label}
+            <option
+              value={optionValue ? JSON.stringify(optionValue(option)) : JSON.stringify(option)}
+              key={optionLabel(option)}
+            >
+              {optionLabel(option)}
             </option>
           ))}
         </select>

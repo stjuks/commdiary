@@ -26,46 +26,37 @@ const initialValues: EntryFormValues = {
 };
 
 const validationSchema = yup.object({
-  content: yup.string().required('Sisesta sõnumi sisu.')
+  content: yup.string()
 });
 
-const SHIFT = 16;
 const UP_ARROW = 38;
+const CTRL = 18;
+const CMD = 91;
 const DOWN_ARROW = 40;
+const M_KEY = 77;
 
 const repOptions = [
   {
-    label: 'MIST',
-    value: {
-      name: 'MIST',
-      mechanism: '',
-      injuries: '',
-      signs: {
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        e: ''
-      }
-    }
+    type: 'MIST',
+    mechanism: '',
+    injuries: '',
+    signs: {
+      a: '',
+      b: '',
+      c: '',
+      d: '',
+      e: ''
+    },
+    treatment: ''
   },
   {
-    label: 'CONTACTREP',
-    value: {
-      name: 'CONTACTREP'
-    }
+    type: 'CONTACTREP'
   },
   {
-    label: 'JAMREP',
-    value: {
-      name: 'JAMREP'
-    }
+    type: 'JAMREP'
   },
   {
-    label: 'INTREP',
-    value: {
-      name: 'INTREP'
-    }
+    type: 'INTREP'
   }
 ];
 
@@ -80,7 +71,8 @@ const EntryForm: React.FC = observer(() => {
 
   const selectRecipientsWithArrows = (
     keyMap: { [key: number]: boolean },
-    form: FormikProps<any>
+    form: FormikProps<any>,
+    event: React.KeyboardEvent
   ) => {
     const diary = diaryStore.activeDiary;
 
@@ -90,7 +82,10 @@ const EntryForm: React.FC = observer(() => {
       const hasEntries = entries.length > 0;
       if (keyMap[DOWN_ARROW]) {
         form.setValues(initialValues);
-      } else if (hasEntries && keyMap[UP_ARROW] && keyMap[SHIFT]) {
+      } else if (keyMap[M_KEY] && (keyMap[CMD] || keyMap[CTRL])) {
+        event.preventDefault();
+        form.setValues({ ...form.values, rep: repOptions[0] });
+      } else if (hasEntries && keyMap[UP_ARROW] && (keyMap[CMD] || keyMap[CTRL])) {
         const { from, to } = entries[entries.length - 1];
         form.setValues({ ...form.values, from: to, to: from });
       } else if (hasEntries && keyMap[UP_ARROW]) {
@@ -125,7 +120,13 @@ const EntryForm: React.FC = observer(() => {
                 style={{ width: '5rem' }}
                 onKeyPress={selectRecipientsWithArrows}
               />
-              <SelectInput label="REP" name="rep" options={repOptions} style={{ width: '5rem' }} />
+              <SelectInput
+                label="REP"
+                name="rep"
+                options={repOptions}
+                optionLabel={option => option.type}
+                style={{ width: '5rem' }}
+              />
             </div>
             <div className="content-field">
               <TextInput
@@ -136,7 +137,7 @@ const EntryForm: React.FC = observer(() => {
               />
             </div>
           </MainFormFields>
-          {formikProps.values.rep && <RepForm type={formikProps.values.rep.name} />}
+          <RepForm type={formikProps.values.rep?.type} />
           <Button type="submit" title="Loo sissekanne" />
         </EntryFormContainer>
       )}

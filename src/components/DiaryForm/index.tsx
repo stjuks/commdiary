@@ -24,18 +24,21 @@ const DiaryForm: React.FC = observer(() => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {formikProps => (
-        <DiaryFormContainer onSubmit={formikProps.handleSubmit} className="modal-body">
-          <TextInput name="name" label="Päeviku nimi" />
-          <Button type="submit" title="Lisa päevik" />
-        </DiaryFormContainer>
-      )}
-    </Formik>
+    <>
+      <h1 className="modal-title">Uus päevik</h1>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {formikProps => (
+          <DiaryFormContainer onSubmit={formikProps.handleSubmit} className="modal-body">
+            <TextInput name="name" label="Päeviku nimi" />
+            <Button type="submit" title="Lisa päevik" />
+          </DiaryFormContainer>
+        )}
+      </Formik>
+    </>
   );
 });
 

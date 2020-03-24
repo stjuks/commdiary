@@ -17,11 +17,11 @@ export interface Diary {
 type RepType = 'MIST' | 'CONTACTREP' | 'JAMREP' | 'QUICKSITREP' | 'INTREP';
 
 export interface Rep {
-  name: RepType;
+  type: RepType;
 }
 
 export interface MISTRep extends Rep {
-  name: 'MIST';
+  type: 'MIST';
   mechanism: string;
   injuries: string;
   signs: {
