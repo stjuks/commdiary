@@ -7,6 +7,7 @@ import ExportForm from '../ExportForm';
 import DiaryList from '../DiaryList';
 import UIStoreContext from '@/stores/UIStore';
 import DiaryStoreContext from '@/stores/DiaryStore';
+import ImportForm from '../ImportForm';
 
 interface HeaderProps {
   title: string;
@@ -23,12 +24,31 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         <h2>{title}</h2>
       </div>
       <div className="action-bar">
-        <button className="btn export-btn" onClick={() => uiStore.openModal(<ExportForm />)}>
-          <FiUpload />
+        <button
+          className="btn import-btn"
+          onClick={() => uiStore.openModal(<ImportForm />)}
+          title="Impordi"
+        >
+          <FiDownload />
         </button>
-        <button className="btn list-btn" onClick={() => uiStore.openModal(<DiaryList />)}>
-          <FiList />
-        </button>
+        {diaryStore.diaries.length > 0 && (
+          <>
+            <button
+              className="btn export-btn"
+              onClick={() => uiStore.openModal(<ExportForm />)}
+              title="Ekspordi"
+            >
+              <FiUpload />
+            </button>
+            <button
+              className="btn list-btn"
+              onClick={() => uiStore.openModal(<DiaryList />)}
+              title="Päevikud"
+            >
+              <FiList />
+            </button>
+          </>
+        )}
       </div>
     </HeaderContainer>
   );

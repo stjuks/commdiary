@@ -53,9 +53,12 @@ export const HeaderContainer = styled.div`
         }
       }
 
-      .export-btn svg {
-        box-sizing: border-box;
-        padding: 0.125rem;
+      .export-btn,
+      .import-btn {
+        svg {
+          box-sizing: border-box;
+          padding: 0.125rem;
+        }
       }
 
       .btn:not(:last-child) {

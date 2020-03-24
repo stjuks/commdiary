@@ -43,17 +43,19 @@ const CheckboxComponent: React.FC<CheckboxProps & FieldProps> = ({
     }
   };
 
+  const stringValue = JSON.stringify(value);
+
   return (
     <CheckboxContainer className={`checkbox-container ${className || ''}`}>
       <input
         type="checkbox"
-        id={value}
+        id={stringValue}
         name={name}
         onChange={handleChange}
         checked={checked ? checked(value) : field.value.includes(value)}
       />
-      <label htmlFor={value} className="check-box" />
-      <label htmlFor={value} className="label">
+      <label htmlFor={stringValue} className="check-box" />
+      <label htmlFor={stringValue} className="label">
         {label}
       </label>
     </CheckboxContainer>

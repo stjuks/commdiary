@@ -3,6 +3,7 @@ import { Diary, DiaryEntry } from '@/types';
 import React, { createContext } from 'react';
 import { loadFromLocalStorage, saveToLocalStorage } from '@/util/helpers';
 import { uiStore } from './UIStore';
+import { validateDiaries } from '@/util/schemas';
 
 class DiaryStore {
   @observable
@@ -74,7 +75,7 @@ class DiaryStore {
   };
 
   @action
-  downloadDiaries = async (diaryIds: number[]) => {
+  exportDiaries = async (diaryIds: number[]) => {
     const diaries = this.diaries.filter(diary => diaryIds.includes(diary.id));
 
     const fileName = 'Sidepäevikud.json';
@@ -88,6 +89,38 @@ class DiaryStore {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  @action
+  importDiaries = async (file: File) => {
+    const reader = new FileReader();
+
+    reader.onload = async (event: ProgressEvent<FileReader>) => {
+      const result = event.target?.result;
+      if (typeof result === 'string') {
+        const loadedDiaries: Diary[] = JSON.parse(result);
+        if (await validateDiaries(loadedDiaries)) {
+          const filteredDiaries: Diary[] = [];
+
+          // overwrite existing diaries with overlapping ids, add others
+          this.diaries.forEach(diary => {
+            loadedDiaries.forEach((loadedDiary, index, array) => {
+              if (loadedDiary.id === diary.id) {
+                diary = loadedDiary;
+                array.splice(index, 1);
+              }
+            });
+            filteredDiaries.push(diary);
+          });
+
+          filteredDiaries.push(...loadedDiaries);
+          this.diaries = filteredDiaries;
+          uiStore.closeModal();
+        }
+      }
+    };
+
+    reader.readAsText(file);
   };
 
   @computed

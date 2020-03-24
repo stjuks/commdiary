@@ -14,7 +14,7 @@ const ExportForm: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
 
   const handleSubmit = ({ diaries }) => {
-    diaryStore.downloadDiaries(diaries);
+    diaryStore.exportDiaries(diaries);
   };
 
   const handleSelectAll = ({ checked, value, name }: CheckboxValue, form: FormikProps<any>) => {
@@ -42,7 +42,7 @@ const ExportForm: React.FC = observer(() => {
                   <Checkbox name="diaries" value={diary.id} label={diary.name} key={diary.id} />
                 ))}
               </div>
-              <Button title="Ekspordi JSON" type="submit" />
+              <Button title="Ekspordi" type="submit" />
             </form>
           )}
         </Formik>

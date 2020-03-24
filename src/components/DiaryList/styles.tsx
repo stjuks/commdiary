@@ -52,9 +52,9 @@ export const DiaryItemContainer = styled.div`
     .del-btn {
       margin-left: auto;
       position: absolute;
-      display: flex;
       right: 1rem;
       cursor: pointer;
+      display: none;
 
       :hover:before {
         position: absolute;
@@ -67,6 +67,10 @@ export const DiaryItemContainer = styled.div`
         height: 2rem;
         border-radius: 50%;
       }
+    }
+
+    :hover .del-btn {
+      display: flex;
     }
 
     .entry-count {

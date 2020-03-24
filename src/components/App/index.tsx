@@ -12,10 +12,13 @@ import Button from '../Button';
 import Modal from '../Modal';
 import UIStoreContext from '@/stores/UIStore';
 import DiaryList from '../DiaryList';
+import DiaryForm from '../DiaryForm';
 
 const App: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
   const uiStore = useContext(UIStoreContext);
+
+  const hasDiaries = diaryStore.diaries.length > 0;
 
   return (
     <ThemeProvider theme={theme}>
@@ -28,12 +31,22 @@ const App: React.FC = observer(() => {
           </>
         ) : (
           <div className="placeholder-text">
-            <div className="description">Ühtegi päevikut pole valitud.</div>
-            <Button
-              type="button"
-              title="Vali päevik"
-              onClick={() => uiStore.openModal(<DiaryList />)}
-            />
+            <div className="description">
+              Ühtegi päevikut pole {hasDiaries ? 'valitud' : 'lisatud'}.
+            </div>
+            {hasDiaries ? (
+              <Button
+                type="button"
+                title="Vali päevik"
+                onClick={() => uiStore.openModal(<DiaryList />)}
+              />
+            ) : (
+              <Button
+                type="button"
+                title="Lisa päevik"
+                onClick={() => uiStore.openModal(<DiaryForm />)}
+              />
+            )}
           </div>
         )}
       </AppContainer>

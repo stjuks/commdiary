@@ -43,27 +43,20 @@ interface DiaryItemProps {
 }
 
 const DiaryItem: React.FC<DiaryItemProps> = ({ diary, setActive, onDelete }) => {
-  const [isHovering, setHovering] = useState(false);
-
   const handleDelete = (event: React.MouseEvent) => {
     event.stopPropagation();
     onDelete(diary.id);
   };
 
   return (
-    <DiaryItemContainer
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-    >
+    <DiaryItemContainer>
       <button className="diary-item" onClick={() => setActive(diary.id)}>
         <div className="diary-name">{diary.name}</div>
         <div className="entry-count">({diary.entries.length})</div>
       </button>
-      {isHovering && (
-        <button className="btn del-btn" onClick={handleDelete}>
-          <FiTrash2 />
-        </button>
-      )}
+      <button className="btn del-btn" onClick={handleDelete}>
+        <FiTrash2 />
+      </button>
     </DiaryItemContainer>
   );
 };

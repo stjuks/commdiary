@@ -19,6 +19,7 @@ export const CheckboxContainer = styled.div`
     input[type=checkbox] {
       opacity: 0;
       position: absolute;
+      pointer-events: none;
 
       :checked + .check-box {
         background: ${theme.colors.accent.opacity(0.75)};
@@ -30,7 +31,7 @@ export const CheckboxContainer = styled.div`
       }
     }
 
-    label {
+    label:hover {
       cursor: pointer;
     }
 
