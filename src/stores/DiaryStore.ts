@@ -15,8 +15,6 @@ class DiaryStore {
     const activeDiaryId = loadFromLocalStorage('activeDiaryId');
     const diaries = loadFromLocalStorage('diaries');
 
-    console.log(diaries);
-
     if (activeDiaryId) this.activeDiaryId = activeDiaryId;
     if (diaries) this.diaries = diaries;
   }
@@ -38,7 +36,6 @@ class DiaryStore {
       entry.time = new Date();
       const diary = this.activeDiary;
       if (diary) diary.entries.push(entry);
-      console.log(entry);
       this.saveDiaries();
     }
   };

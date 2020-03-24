@@ -28,6 +28,7 @@ export const EntryItemContainer = styled.div`
       cursor: pointer;
       color: ${theme.colors.white};
       font-size: 1rem;
+      display: none;
 
       :hover {
         color: ${theme.colors.accent};
@@ -45,6 +46,10 @@ export const EntryItemContainer = styled.div`
         left: 50%;
         background: ${theme.colors.white.opacity(0.1)};
       }
+    }
+
+    :hover .del-btn {
+      display: block;
     }
 
     .row {

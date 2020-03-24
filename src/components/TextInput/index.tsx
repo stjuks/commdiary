@@ -6,7 +6,11 @@ interface TextInputProps {
   name: string;
   label: string;
   style?: CSSProperties;
-  onKeyPress?: (keysPressed: { [key: number]: boolean }, form: FormikProps<any>, event: KeyboardEvent) => any;
+  onKeyPress?: (
+    keysPressed: { [key: number]: boolean },
+    form: FormikProps<any>,
+    event: KeyboardEvent
+  ) => any;
   onKeyDown?: (event: KeyboardEvent, form: FormikProps<any>) => any;
   ref?: React.RefObject<HTMLInputElement>;
 }
@@ -36,8 +40,9 @@ const TextInputComponent: React.FC<TextInputProps & FieldProps> = forwardRef(
         </label>
         <div className="input-field">
           <input
-            type="text"
             {...field}
+            value={field.value || ''}
+            type="text"
             id={field.name}
             autoComplete="off"
             onKeyDown={handleKeyDown}

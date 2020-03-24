@@ -24,7 +24,7 @@ const ExportForm: React.FC = observer(() => {
 
   return (
     <>
-      <h1 className="modal-title">Ekspordi päevikud</h1>
+      <h1 className="modal-title">Vali päevikud</h1>
       <ExportFormContainer className="modal-body">
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {formikProps => (
@@ -42,7 +42,7 @@ const ExportForm: React.FC = observer(() => {
                   <Checkbox name="diaries" value={diary.id} label={diary.name} key={diary.id} />
                 ))}
               </div>
-              <Button title="Ekspordi päevikud" type="submit" />
+              <Button title="Ekspordi JSON" type="submit" />
             </form>
           )}
         </Formik>

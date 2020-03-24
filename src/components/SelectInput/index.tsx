@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 import { SelectInputContainer } from './styles';
 import { FieldProps, Field } from 'formik';
@@ -22,7 +22,6 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
   optionValue,
   style
 }) => {
-  const [value, setValue] = useState<any>(undefined);
   const errorMsg = form.errors[field.name];
 
   const parseValue = (value: any) => {
@@ -35,8 +34,6 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
-
-    setValue(value);
     form.setFieldValue(field.name, parseValue(value));
   };
 
@@ -46,11 +43,11 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
         {label}
       </label>
       <div className="input-field">
-        <select onChange={handleChange} defaultValue={undefined} id={field.name} value={!field.value || value}>
+        <select onChange={handleChange} id={field.name} value={field.value || ''}>
           <option value=""></option>
           {options.map(option => (
             <option
-              value={optionValue ? JSON.stringify(optionValue(option)) : JSON.stringify(option)}
+              value={optionValue ? JSON.stringify(optionValue(option)) : option}
               key={optionLabel(option)}
             >
               {optionLabel(option)}

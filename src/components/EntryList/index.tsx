@@ -45,8 +45,6 @@ interface EntryItemProps {
 }
 
 const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit }) => {
-  const [isHovering, setHovering] = useState(false);
-
   const handleEdit = (event: React.FocusEvent<HTMLDivElement>) => {
     const { id, textContent } = event.currentTarget;
 
@@ -57,15 +55,10 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit 
   };
 
   return (
-    <EntryItemContainer
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-    >
-      {isHovering && (
-        <button className="del-btn" onClick={() => onDelete(entry.id)}>
-          <FiTrash2 />
-        </button>
-      )}
+    <EntryItemContainer>
+      <button className="del-btn" onClick={() => onDelete(entry.id)}>
+        <FiTrash2 />
+      </button>
       <div className="row row-1">
         <div className="recipients">
           <span
@@ -98,7 +91,7 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit 
           suppressContentEditableWarning
           onBlur={handleEdit}
         >
-          {entry.content || '-'}
+          {entry.content || '-'}
         </div>
         {entry.rep && <button className="rep-name">{entry.rep.type}</button>}
       </div>
