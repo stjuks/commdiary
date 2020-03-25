@@ -24,7 +24,7 @@ const ExportForm: React.FC = observer(() => {
 
   return (
     <>
-      <h1 className="modal-title">Vali päevikud</h1>
+      <h1 className="modal-title">Ekspordi päevikud</h1>
       <ExportFormContainer className="modal-body">
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {formikProps => (
