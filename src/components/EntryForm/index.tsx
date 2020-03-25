@@ -96,8 +96,8 @@ const EntryFormComponent: React.FC = observer(() => {
 
   useHotkeys(
     {
-      'shift+m': displayMist,
-      'shift+arrowup': () => selectPreviousRecipients(true),
+      'control+m,meta+m': displayMist,
+      'control+arrowup,meta+arrowup': () => selectPreviousRecipients(true),
       arrowup: selectPreviousRecipients,
       arrowdown: resetForm
     },

@@ -9,12 +9,21 @@ export const TextInputContainer = styled.div`
       display: flex;
       border-bottom: 1px solid ${theme.colors.white.opacity(0.15)};
       border-radius: 0.5rem 0.5rem 0 0;
+      position: relative;
 
       .indicator {
         width: 1.5rem;
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+
+      .focus-line {
+        position: absolute;
+        bottom: 0;
+        height: 1px;
+        width: 0;
+        transition: all .2s;
       }
 
       input, select {
@@ -27,6 +36,16 @@ export const TextInputContainer = styled.div`
         min-width: 0;
         background: transparent;
         color: ${theme.colors.white};
+
+        :hover + .focus-line {
+          background: ${theme.colors.white.opacity(0.15)};
+          width: 100%;
+        }
+
+        :focus + .focus-line {
+          background: ${theme.colors.accent};
+          width: 100%;
+        }
       }
     }  
     

@@ -86,6 +86,7 @@ video {
   font-size: 100%;
   background: transparent;
   border: none;
+  outline: none;
   color: currentColor;
   font: inherit;
   vertical-align: baseline;

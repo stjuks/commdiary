@@ -43,7 +43,7 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
         {label}
       </label>
       <div className="input-field">
-        <select onChange={handleChange} id={field.name} value={field.value || ''}>
+        <select onChange={handleChange} id={field.name} value={field.value || ''}>
           <option value=""></option>
           {options.map(option => (
             <option
@@ -54,6 +54,7 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
             </option>
           ))}
         </select>
+        <span className="focus-line" />
         <div className="indicator">
           <FiChevronDown />
         </div>

@@ -38,8 +38,8 @@ export const HeaderContainer = styled.div`
         cursor: pointer;
         position: relative;
 
-        :hover:before,
-        :focus:before {
+        :before {
+          transition: all .2s;
           content: '';
           transform: translate(-50%, -50%);
           top: 50%;
@@ -49,6 +49,11 @@ export const HeaderContainer = styled.div`
           height: 100%;
           width: 100%;
           z-index: -1;
+          background: transparent;
+        }
+
+        :hover:before,
+        :focus:before {
           background: ${theme.colors.accent.opacity(0.1)};
         }
       }

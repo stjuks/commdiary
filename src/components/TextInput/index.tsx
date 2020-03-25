@@ -49,6 +49,7 @@ const TextInputComponent: React.FC<TextInputProps & FieldProps> = forwardRef(
             onKeyUp={handleKeyUp}
             ref={ref}
           />
+          <span className="focus-line" />
         </div>
         <div className="error-message">{errorMsg}</div>
       </TextInputContainer>
