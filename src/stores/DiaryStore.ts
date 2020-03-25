@@ -115,6 +115,7 @@ class DiaryStore {
 
           filteredDiaries.push(...loadedDiaries);
           this.diaries = filteredDiaries;
+          this.saveDiaries();
           uiStore.closeModal();
         }
       }

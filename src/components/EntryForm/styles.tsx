@@ -19,6 +19,7 @@ export const MainFormFields = styled.div`
     min-width: 20rem;
     display: flex;
     flex: 1;
+    flex-shrink: 0;
 
     .input-container { flex: 1; }
   }
