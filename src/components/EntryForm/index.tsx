@@ -32,7 +32,16 @@ const validationSchema = yup.object({
   content: yup.string()
 });
 
-const repOptions: RepType[] = ['MIST', 'CONTACTREP', 'JAMREP', 'INTREP'];
+const repOptions: RepType[] = [
+  'MIST',
+  'CONTACTREP',
+  'QUICKSITREP',
+  'JAMREP',
+  'INTREP',
+  'AAREP',
+  'NINELINER',
+  'BOMBREP'
+];
 
 const EntryForm: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
@@ -71,9 +80,9 @@ const EntryFormComponent: React.FC = observer(() => {
     focusContentInput();
   };
 
-  const displayMist = () => {
-    if (values.rep?.type === 'MIST') setValues({ ...values, rep: { type: undefined } });
-    else setValues({ ...values, rep: { type: repOptions[0] } });
+  const displayRep = (type: RepType) => {
+    if (values.rep?.type === type) setValues({ ...values, rep: { type: undefined } });
+    else setValues({ ...values, rep: { type } });
   };
 
   const selectPreviousRecipients = (switchRecipients?: boolean) => {
@@ -96,8 +105,15 @@ const EntryFormComponent: React.FC = observer(() => {
 
   useHotkeys(
     {
-      'control+m,meta+m': displayMist,
-      'control+arrowup,meta+arrowup': () => selectPreviousRecipients(true),
+      'control+shift+c, meta+shift+c': () => displayRep('CONTACTREP'),
+      'control+shift+m, meta+shift+m': () => displayRep('MIST'),
+      'control+shift+j, meta+shift+j': () => displayRep('JAMREP'),
+      'control+shift+s, meta+shift+s': () => displayRep('QUICKSITREP'),
+      'control+shift+i, meta+shift+i': () => displayRep('INTREP'),
+      'control+shift+a, meta+shift+a': () => displayRep('AAREP'),
+      'control+shift+9, meta+shift+9': () => displayRep('NINELINER'),
+      'control+shift+b, meta+shift+b': () => displayRep('BOMBREP'),
+      'control+arrowup, meta+arrowup': () => selectPreviousRecipients(true),
       arrowup: selectPreviousRecipients,
       arrowdown: resetForm
     },

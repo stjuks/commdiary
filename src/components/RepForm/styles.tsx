@@ -27,6 +27,7 @@ export const RepFormContainer = styled.div`
         border-left: 1px solid ${theme.colors.white.opacity(0.1)};
         padding-left: 1rem;
         margin-left: 0.75rem;
+        padding-top: 0.5rem;
       }
 
       .sub-label {

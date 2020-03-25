@@ -13,6 +13,7 @@ export const TextInputContainer = styled.div`
 
       .indicator {
         width: 1.5rem;
+        color: ${theme.colors.white.opacity(0.5)};
         display: flex;
         align-items: center;
         justify-content: center;

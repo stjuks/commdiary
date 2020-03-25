@@ -44,7 +44,7 @@ export const useHotkeys = (keyBinds: KeybindMap, deps: any[]) => {
     const hotkeyMap = {};
 
     Object.entries(keyBinds).forEach(([key, value]) => {
-      key.split(',').forEach(bind => (hotkeyMap[bind] = value));
+      key.split(',').forEach(bind => (hotkeyMap[bind.trim()] = value));
     });
 
     setHotkeys(hotkeyMap);

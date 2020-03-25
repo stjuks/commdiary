@@ -14,7 +14,15 @@ export interface Diary {
   entries: DiaryEntry[];
 }
 
-type RepType = 'MIST' | 'CONTACTREP' | 'JAMREP' | 'QUICKSITREP' | 'INTREP';
+type RepType =
+  | 'MIST'
+  | 'CONTACTREP'
+  | 'JAMREP'
+  | 'QUICKSITREP'
+  | 'INTREP'
+  | 'AAREP'
+  | 'NINELINER'
+  | 'BOMBREP';
 
 export interface Rep {
   type: RepType;
