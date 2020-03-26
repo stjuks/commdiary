@@ -4,7 +4,7 @@ export interface DiaryEntry {
   from: string;
   to: string;
   content: string;
-  rep?: Rep;
+  rep: Rep;
 }
 
 export interface Diary {
@@ -25,7 +25,8 @@ type RepType =
   | 'BOMBREP';
 
 export interface Rep {
-  type: RepType;
+  type: RepType | undefined;
+  [key: string]: string | object;
 }
 
 export interface MISTRep extends Rep {

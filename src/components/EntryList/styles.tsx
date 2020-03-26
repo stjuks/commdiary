@@ -71,10 +71,15 @@ export const EntryItemContainer = styled.div`
       .rep-name {
         font-size: 0.75rem;
         font-weight: 700;
-        text-decoration: underline;
         cursor: pointer;
         margin-left: 1rem;
         color: ${theme.colors.white.opacity(0.75)};
+
+        :focus,
+        :hover {
+          text-decoration: underline;
+          color: ${theme.colors.accent};
+        }
       }
     }
 

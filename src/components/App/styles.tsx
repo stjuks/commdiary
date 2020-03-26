@@ -12,7 +12,7 @@ export const AppContainer = styled.div`
     right: 0;
     bottom: 0;
 
-    color: ${theme.colors.white};
+    color: ${theme.colors.white.opacity(0.9)};
 
     background: ${theme.colors.primary};
 

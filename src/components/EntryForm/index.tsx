@@ -113,7 +113,7 @@ const EntryFormComponent: React.FC = observer(() => {
       'control+shift+a, meta+shift+a': () => displayRep('AAREP'),
       'control+shift+9, meta+shift+9': () => displayRep('NINELINER'),
       'control+shift+b, meta+shift+b': () => displayRep('BOMBREP'),
-      'control+arrowup, meta+arrowup': () => selectPreviousRecipients(true),
+      'shift+arrowup, shift+arrowup': () => selectPreviousRecipients(true),
       arrowup: selectPreviousRecipients,
       arrowdown: resetForm
     },
@@ -121,28 +121,27 @@ const EntryFormComponent: React.FC = observer(() => {
   );
 
   return (
-    <>
-      <EntryFormContainer onSubmit={onSubmit}>
-        <MainFormFields>
-          <div className="short-fields">
-            <SelectInput
-              label="REP"
-              name="rep.type"
-              options={repOptions}
-              optionLabel={option => option}
-              style={{ width: '5rem' }}
-            />
-            <TextInput name="to" label="Kellele" style={{ width: '5rem' }} />
-            <TextInput name="from" label="Kellelt" style={{ width: '5rem' }} />
-          </div>
-          <div className="content-field">
-            <TextInput name="content" ref={contentInputRef} label="Sisu" style={{ flex: 1 }} />
-          </div>
-        </MainFormFields>
-        <RepForm type={values.rep?.type} />
-        <Button type="submit" title="Loo sissekanne" />
-      </EntryFormContainer>
-    </>
+    <EntryFormContainer onSubmit={onSubmit}>
+      <MainFormFields>
+        <div className="short-fields">
+          <SelectInput
+            label="REP"
+            name="rep.type"
+            onChange={(type, form) => form.setFieldValue('rep', { type })}
+            options={repOptions}
+            optionLabel={option => option}
+            style={{ width: '5rem' }}
+          />
+          <TextInput name="to" label="Kellele" style={{ width: '5rem' }} />
+          <TextInput name="from" label="Kellelt" style={{ width: '5rem' }} />
+        </div>
+        <div className="content-field">
+          <TextInput name="content" ref={contentInputRef} label="Sisu" style={{ flex: 1 }} />
+        </div>
+      </MainFormFields>
+      <RepForm type={values.rep?.type} />
+      <Button type="submit" title="Loo sissekanne" />
+    </EntryFormContainer>
   );
 });
 

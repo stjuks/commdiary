@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 import { SelectInputContainer } from './styles';
-import { FieldProps, Field } from 'formik';
+import { FieldProps, Field, FormikProps } from 'formik';
 import { isJson } from '@/util/helpers';
 
 interface SelectInputProps {
@@ -10,6 +10,7 @@ interface SelectInputProps {
   options: any[];
   optionLabel: (option: any) => string;
   optionValue?: (option: any) => any;
+  onChange?: (value: any, form: FormikProps<any>) => any;
   style?: React.CSSProperties;
 }
 
@@ -20,7 +21,8 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
   options,
   optionLabel,
   optionValue,
-  style
+  style,
+  onChange
 }) => {
   const errorMsg = form.errors[field.name];
 
@@ -34,7 +36,8 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
 
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
-    form.setFieldValue(field.name, parseValue(value));
+    if (onChange) onChange(value, form);
+    else form.setFieldValue(field.name, parseValue(value));
   };
 
   return (

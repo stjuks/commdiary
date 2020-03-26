@@ -6,10 +6,13 @@ import { DiaryEntry } from '@/types';
 import { EntryListContainer, EntryItemContainer } from './styles';
 import { observer } from 'mobx-react-lite';
 import DiaryStoreContext from '@/stores/DiaryStore';
+import UIStoreContext from '@/stores/UIStore';
 import { usePrevious } from '@/util/hooks';
+import RepDetails from '../RepDetails';
 
 const EntryList: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
+  const uiStore = useContext(UIStoreContext);
 
   const listLength = diaryStore.activeDiary?.entries.length || 0;
 
@@ -32,6 +35,7 @@ const EntryList: React.FC = observer(() => {
           key={entry.id}
           onDelete={diaryStore.deleteEntry}
           onEdit={diaryStore.editEntry}
+          openRep={uiStore.openModal}
         />
       ))}
     </EntryListContainer>
@@ -42,9 +46,10 @@ interface EntryItemProps {
   entry: DiaryEntry;
   onDelete: (id: number) => any;
   onEdit: (entry: DiaryEntry) => any;
+  openRep: (modal: React.ReactElement) => any;
 }
 
-const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit }) => {
+const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit, openRep }) => {
   const handleEdit = (event: React.FocusEvent<HTMLDivElement>) => {
     const { id, textContent } = event.currentTarget;
 
@@ -93,7 +98,11 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit 
         >
           {entry.content || '-'}
         </div>
-        {entry.rep && <button className="rep-name">{entry.rep.type}</button>}
+        {entry.rep.type && (
+          <button className="rep-name" onClick={() => openRep(<RepDetails rep={entry.rep} />)}>
+            {entry.rep.type}
+          </button>
+        )}
       </div>
     </EntryItemContainer>
   );

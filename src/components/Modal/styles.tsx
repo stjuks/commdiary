@@ -7,6 +7,7 @@ ReactModal.setAppElement('#root');
 export const ModalStyled = styled(ReactModal)`
   ${({ theme }) => `
     min-width: 18rem;
+    margin: 1rem;
     outline: none;
     border-radius: 8px;
     background: ${theme.colors.primary};

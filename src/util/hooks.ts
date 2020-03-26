@@ -51,15 +51,15 @@ export const useHotkeys = (keyBinds: KeybindMap, deps: any[]) => {
   }, deps);
 
   useEffect(() => {
-    const handleKeyUp = () => {
+    const clearPressedKeys = () => {
       if (pressedKeys.length !== 0) setPressedKeys([]);
     };
 
-    window.addEventListener('keyup', handleKeyUp);
+    window.addEventListener('keyup', clearPressedKeys);
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      window.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener('keyup', clearPressedKeys);
       window.removeEventListener('keydown', handleKeyDown);
     };
   });
