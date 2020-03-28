@@ -4,8 +4,8 @@ export const RepDetailsContainer = styled.div`
   ${({ theme }) => ` 
     color: ${theme.colors.white.opacity(0.9)};
     
-    & > .detail-container {
-      
+    .detail-container {
+      min-width: 10rem;
     }
 
     .detail-value {

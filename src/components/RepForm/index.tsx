@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RepFormContainer } from './styles';
 import { RepType } from '@/types';
 import reps, { RepStructure, RepSubField } from '@/util/reps';
+import { editProperty } from '@/util/helpers';
 
 import TextInput from '../TextInput';
+import { useFormikContext } from 'formik';
 
 interface RepFormProps {
   type?: RepType;

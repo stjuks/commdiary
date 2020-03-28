@@ -67,3 +67,25 @@ export const isJson = (item: any) => {
 
   return false;
 };
+
+export const editProperty = <T>(obj: T, path: string, editValue: any) => {
+  const properties = path.split('.');
+
+  properties.reduce((prev, curr, index) => {
+    if (prev && typeof prev === 'object') {
+      if (prev[curr] === undefined) {
+        prev[curr] = {};
+      }
+
+      if (index + 1 === properties.length && editValue !== undefined) {
+        prev[curr] = editValue;
+      }
+
+      return prev[curr];
+    }
+
+    return undefined;
+  }, obj);
+
+  return obj;
+};

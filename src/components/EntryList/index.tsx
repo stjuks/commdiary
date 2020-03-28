@@ -99,7 +99,12 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit,
           {entry.content || '-'}
         </div>
         {entry.rep.type && (
-          <button className="rep-name" onClick={() => openRep(<RepDetails rep={entry.rep} />)}>
+          <button
+            className="rep-name"
+            onClick={() =>
+              openRep(<RepDetails rep={entry.rep} onEdit={rep => onEdit({ ...entry, rep })} />)
+            }
+          >
             {entry.rep.type}
           </button>
         )}
