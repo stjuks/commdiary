@@ -8,7 +8,7 @@ export const ExportFormContainer = styled.div`
     }
 
     .checkboxes {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .checkbox-container:not(:last-child) {
@@ -22,6 +22,14 @@ export const ExportFormContainer = styled.div`
       .label {
         color: ${theme.colors.white};
       }
+    }
+
+    .error-message {
+      color: ${theme.colors.danger};
+      height: 1rem;
+      display: flex;
+      align-items: center;
+      font-size: 0.75rem;
     }
   `}
 `;

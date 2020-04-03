@@ -25,25 +25,25 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
       </div>
       <div className="action-bar">
         <button
-          className="btn import-btn"
+          className="btn import-btn tooltip"
+          data-tooltip="Impordi"
           onClick={() => uiStore.openModal(<ImportForm />)}
-          title="Impordi"
         >
           <FiDownload />
         </button>
         {diaryStore.diaries.length > 0 && (
           <>
             <button
-              className="btn export-btn"
+              className="btn export-btn tooltip"
+              data-tooltip="Ekspordi"
               onClick={() => uiStore.openModal(<ExportForm />)}
-              title="Ekspordi"
             >
               <FiUpload />
             </button>
             <button
-              className="btn list-btn"
+              className="btn list-btn tooltip"
+              data-tooltip="Päevikud"
               onClick={() => uiStore.openModal(<DiaryList />)}
-              title="Päevikud"
             >
               <FiList />
             </button>

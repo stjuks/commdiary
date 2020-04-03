@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { ExportFormContainer } from './styles';
+import * as yup from 'yup';
 import Button from '../Button';
 import Checkbox, { CheckboxValue } from '../Checkbox';
 import DiaryStoreContext from '@/stores/DiaryStore';
@@ -22,11 +23,20 @@ const ExportForm: React.FC = observer(() => {
     else form.setFieldValue(name, []);
   };
 
+  const validationSchema = yup.object({
+    diaries: yup.array().required('Vali vähemalt üks päevik.')
+  });
+
   return (
     <>
       <h1 className="modal-title">Ekspordi päevikud</h1>
       <ExportFormContainer className="modal-body">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+          validateOnBlur={false}
+        >
           {formikProps => (
             <form onSubmit={formikProps.handleSubmit}>
               <Checkbox
@@ -42,6 +52,7 @@ const ExportForm: React.FC = observer(() => {
                   <Checkbox name="diaries" value={diary.id} label={diary.name} key={diary.id} />
                 ))}
               </div>
+              <div className="error-message">{formikProps.errors.diaries}</div>
               <Button title="Ekspordi" type="submit" />
             </form>
           )}

@@ -61,7 +61,7 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit,
 
   return (
     <EntryItemContainer>
-      <button className="del-btn" onClick={() => onDelete(entry.id)}>
+      <button className="del-btn tooltip" data-tooltip="Kustuta" onClick={() => onDelete(entry.id)}>
         <FiTrash2 />
       </button>
       <div className="row row-1">

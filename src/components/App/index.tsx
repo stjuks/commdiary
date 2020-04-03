@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '@/util/styled';
 
-import { AppContainer } from './styles';
+import { AppContainer, GlobalStyle } from './styles';
 import EntryForm from '../EntryForm';
 import EntryList from '../EntryList';
 import Header from '../Header';
@@ -22,6 +22,7 @@ const App: React.FC = observer(() => {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyle />
       <AppContainer>
         <Header title="Sidepäevik" />
         {diaryStore.activeDiary ? (
