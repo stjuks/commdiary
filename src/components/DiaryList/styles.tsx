@@ -56,7 +56,8 @@ export const DiaryItemContainer = styled.div`
       cursor: pointer;
       display: none;
 
-      :hover:before {
+      :hover:before,
+      :focus:before {
         position: absolute;
         content: '';
         transform: translate(-50%, -50%);

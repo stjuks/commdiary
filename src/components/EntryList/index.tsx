@@ -61,9 +61,6 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit,
 
   return (
     <EntryItemContainer>
-      <button className="del-btn tooltip" data-tooltip="Kustuta" onClick={() => onDelete(entry.id)}>
-        <FiTrash2 />
-      </button>
       <div className="row row-1">
         <div className="recipients">
           <span
@@ -109,6 +106,9 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit,
           </button>
         )}
       </div>
+      <button className="del-btn tooltip" data-tooltip="Kustuta" onClick={() => onDelete(entry.id)}>
+        <FiTrash2 />
+      </button>
     </EntryItemContainer>
   );
 });

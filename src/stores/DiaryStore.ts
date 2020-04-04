@@ -92,32 +92,42 @@ class DiaryStore {
   };
 
   @action
-  importDiaries = async (file: File) => {
+  importDiaries = async (file: File, checkForDuplicates?: boolean) => {
     const reader = new FileReader();
 
     reader.onload = async (event: ProgressEvent<FileReader>) => {
       const result = event.target?.result;
       if (typeof result === 'string') {
         const loadedDiaries: Diary[] = JSON.parse(result);
-        if (await validateDiaries(loadedDiaries)) {
-          const filteredDiaries: Diary[] = [];
+        const filteredDiaries: Diary[] = [];
+        const duplicateDiaries: Diary[] = [];
 
-          // overwrite existing diaries with overlapping ids, add others
-          this.diaries.forEach(diary => {
-            loadedDiaries.forEach((loadedDiary, index, array) => {
-              if (loadedDiary.id === diary.id) {
+        // overwrite existing diaries with overlapping ids, add others
+        this.diaries.forEach(diary => {
+          loadedDiaries.forEach((loadedDiary, index, array) => {
+            if (loadedDiary.id === diary.id) {
+              if (checkForDuplicates) {
+                duplicateDiaries.push(loadedDiary);
+                console.log(`Päevik ${diary.name} juba eksisteerib.`);
+              } else {
                 diary = loadedDiary;
                 array.splice(index, 1);
               }
-            });
-            filteredDiaries.push(diary);
+            }
           });
+          filteredDiaries.push(diary);
+        });
 
+        if (duplicateDiaries.length === 0) {
           filteredDiaries.push(...loadedDiaries);
           this.diaries = filteredDiaries;
           this.saveDiaries();
           uiStore.closeModal();
         }
+
+        /* if (await validateDiaries(loadedDiaries)) {
+          
+        } */
       }
     };
 

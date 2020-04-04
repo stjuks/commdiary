@@ -30,7 +30,8 @@ export const EntryItemContainer = styled.div`
       font-size: 1rem;
       display: none;
 
-      :hover {
+      :hover,
+      :focus {
         color: ${theme.colors.accent};
       }
 
@@ -48,7 +49,8 @@ export const EntryItemContainer = styled.div`
       }
     }
 
-    :hover .del-btn {
+    :hover .del-btn,
+    :focus-within .del-btn {
       display: block;
     }
 

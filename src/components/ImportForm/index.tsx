@@ -9,7 +9,7 @@ const ImportForm: React.FC = () => {
   const [file, setFile] = useState<File | undefined>(undefined);
 
   const handleSubmit = () => {
-    if (file) diaryStore.importDiaries(file);
+    if (file) diaryStore.importDiaries(file, true);
   };
 
   return (

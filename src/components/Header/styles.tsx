@@ -66,6 +66,11 @@ export const HeaderContainer = styled.div`
         }
       }
 
+      .info-btn,
+      .list-btn {
+        font-size: 1.75rem;
+      }
+
       .btn:not(:last-child) {
         margin-right: 1rem;
       }

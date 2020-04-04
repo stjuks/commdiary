@@ -54,7 +54,7 @@ const DiaryItem: React.FC<DiaryItemProps> = ({ diary, setActive, onDelete }) => 
         <div className="diary-name">{diary.name}</div>
         <div className="entry-count">({diary.entries.length})</div>
       </button>
-      <button className="btn del-btn tooltip" data-tooltip="Kustuta" onClick={handleDelete}>
+      <button className="btn del-btn" onClick={handleDelete}>
         <FiTrash2 />
       </button>
     </DiaryItemContainer>

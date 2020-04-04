@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 
 import { HeaderContainer } from './styles';
-import { FiPlusCircle, FiList, FiDownload, FiUpload } from 'react-icons/fi';
-import DiaryForm from '../DiaryForm';
+import { FiList, FiDownload, FiUpload, FiInfo } from 'react-icons/fi';
 import ExportForm from '../ExportForm';
 import DiaryList from '../DiaryList';
 import UIStoreContext from '@/stores/UIStore';
 import DiaryStoreContext from '@/stores/DiaryStore';
 import ImportForm from '../ImportForm';
+import Info from '../Info';
 
 interface HeaderProps {
   title: string;
@@ -24,6 +24,13 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         <h2>{title}</h2>
       </div>
       <div className="action-bar">
+        <button
+          className="btn info-btn tooltip"
+          data-tooltip="Hotkeyd"
+          onClick={() => uiStore.openModal(<Info />)}
+        >
+          <FiInfo />
+        </button>
         <button
           className="btn import-btn tooltip"
           data-tooltip="Impordi"
