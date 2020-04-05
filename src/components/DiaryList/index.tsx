@@ -7,6 +7,7 @@ import { DiaryListContainer, ListContainer, DiaryItemContainer } from './styles'
 import Button from '../Button';
 import DiaryForm from '../DiaryForm';
 import { FiTrash2 } from 'react-icons/fi';
+import AlertDialog from '../AlertDialog';
 
 const DiaryList: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
@@ -17,11 +18,28 @@ const DiaryList: React.FC = observer(() => {
       <h1 className="modal-title">Päevikud</h1>
       <DiaryListContainer className="modal-body">
         <ListContainer>
-          {diaryStore.diaries.map(diary => (
+          {diaryStore.diaries.map((diary) => (
             <DiaryItem
               diary={diary}
               setActive={diaryStore.setActiveDiary}
-              onDelete={diaryStore.deleteDiary}
+              onDelete={() =>
+                uiStore.openModal(
+                  <AlertDialog
+                    title={`Kas oled kindel, et soovid päeviku kustutada?`}
+                    description="
+                      Päevik kustutatakse jäädavalt. 
+                      Kui soovid päeviku säilitada, aga nimekirjast kustutada, siis kasuta eksportimise funktsiooni.
+                    "
+                    buttons={[
+                      {
+                        type: 'danger',
+                        title: 'Kustuta',
+                        onClick: () => diaryStore.deleteDiary(diary.id),
+                      },
+                    ]}
+                  />
+                )
+              }
               key={diary.id}
             />
           ))}

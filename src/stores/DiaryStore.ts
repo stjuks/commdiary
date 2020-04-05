@@ -3,7 +3,6 @@ import { Diary, DiaryEntry } from '@/types';
 import React, { createContext } from 'react';
 import { loadFromLocalStorage, saveToLocalStorage } from '@/util/helpers';
 import { uiStore } from './UIStore';
-import { validateDiaries } from '@/util/schemas';
 
 class DiaryStore {
   @observable
@@ -46,7 +45,7 @@ class DiaryStore {
     if (this.activeDiaryId) {
       const diary = this.activeDiary;
       if (diary)
-        diary.entries = diary.entries.map(entry =>
+        diary.entries = diary.entries.map((entry) =>
           entry.id === editedEntry.id ? editedEntry : entry
         );
       this.saveDiaries();
@@ -56,14 +55,14 @@ class DiaryStore {
   @action
   deleteEntry = (entryId: number) => {
     if (this.activeDiary) {
-      this.activeDiary.entries = this.activeDiary.entries.filter(entry => entry.id !== entryId);
+      this.activeDiary.entries = this.activeDiary.entries.filter((entry) => entry.id !== entryId);
       this.saveDiaries();
     }
   };
 
   @action
   deleteDiary = (diaryId: number) => {
-    this.diaries = this.diaries.filter(diary => diary.id !== diaryId);
+    this.diaries = this.diaries.filter((diary) => diary.id !== diaryId);
     this.saveDiaries();
   };
 
@@ -76,7 +75,7 @@ class DiaryStore {
 
   @action
   exportDiaries = async (diaryIds: number[]) => {
-    const diaries = this.diaries.filter(diary => diaryIds.includes(diary.id));
+    const diaries = this.diaries.filter((diary) => diaryIds.includes(diary.id));
 
     const fileName = 'Sidepäevikud.json';
 
@@ -92,51 +91,46 @@ class DiaryStore {
   };
 
   @action
-  importDiaries = async (file: File, checkForDuplicates?: boolean) => {
-    const reader = new FileReader();
+  findDuplicateDiaries = (diaries: Diary[]) => {
+    const duplicateDiaries: Diary[] = [];
+    const tempDiaries: Diary[] = Object.assign([], diaries);
 
-    reader.onload = async (event: ProgressEvent<FileReader>) => {
-      const result = event.target?.result;
-      if (typeof result === 'string') {
-        const loadedDiaries: Diary[] = JSON.parse(result);
-        const filteredDiaries: Diary[] = [];
-        const duplicateDiaries: Diary[] = [];
-
-        // overwrite existing diaries with overlapping ids, add others
-        this.diaries.forEach(diary => {
-          loadedDiaries.forEach((loadedDiary, index, array) => {
-            if (loadedDiary.id === diary.id) {
-              if (checkForDuplicates) {
-                duplicateDiaries.push(loadedDiary);
-                console.log(`Päevik ${diary.name} juba eksisteerib.`);
-              } else {
-                diary = loadedDiary;
-                array.splice(index, 1);
-              }
-            }
-          });
-          filteredDiaries.push(diary);
-        });
-
-        if (duplicateDiaries.length === 0) {
-          filteredDiaries.push(...loadedDiaries);
-          this.diaries = filteredDiaries;
-          this.saveDiaries();
-          uiStore.closeModal();
+    // check for duplicates
+    this.diaries.forEach((diary) => {
+      tempDiaries.forEach((loadedDiary, index, array) => {
+        if (loadedDiary.id === diary.id) {
+          duplicateDiaries.push(loadedDiary);
+          array.splice(index, 1);
         }
+      });
+    });
 
-        /* if (await validateDiaries(loadedDiaries)) {
-          
-        } */
-      }
+    return {
+      uniques: tempDiaries,
+      duplicates: duplicateDiaries,
     };
+  };
 
-    reader.readAsText(file);
+  @action
+  importDiaries = (diaries: Diary[], mode: 'OVERWRITE_EXISTING' | 'LEAVE_EXISTING') => {
+    this.diaries.forEach((diary, i, existingDiaries) => {
+      diaries.forEach((loadedDiary, index, array) => {
+        if (loadedDiary.id === diary.id) {
+          if (mode === 'OVERWRITE_EXISTING') {
+            existingDiaries[i] = loadedDiary;
+          }
+          array.splice(index, 1);
+        }
+      });
+    });
+
+    this.diaries = [...this.diaries, ...diaries];
+    this.saveDiaries();
   };
 
   @computed
   get activeDiary() {
-    return this.diaries.find(diary => diary.id === this.activeDiaryId);
+    return this.diaries.find((diary) => diary.id === this.activeDiaryId);
   }
 
   private saveDiaries = () => {
