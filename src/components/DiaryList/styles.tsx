@@ -30,13 +30,13 @@ export const DiaryItemContainer = styled.div`
       width: 100%;
       display: flex;
       padding: 1rem;
-      padding-right: 3rem;
       border-radius: 0.5rem;
       cursor: pointer;
       font-weight: 500;
       display: flex;
       align-items: center;
       outline: none;
+      padding-right: 6.5rem;
 
       :hover, :focus {
         background: ${theme.colors.accent.opacity(0.05)};
@@ -49,30 +49,45 @@ export const DiaryItemContainer = styled.div`
       white-space: nowrap;
     }
 
-    .del-btn {
-      margin-left: auto;
+    .action-buttons {
+      visibility: hidden;
       position: absolute;
-      right: 1rem;
-      cursor: pointer;
-      display: none;
+      right: 1.5rem;
+      display: flex;
+      align-items: center;
+      margin-left: auto;
 
-      :hover:before,
-      :focus:before {
-        position: absolute;
-        content: '';
-        transform: translate(-50%, -50%);
-        top: 50%;
-        background: ${theme.colors.accent.opacity(0.1)};
-        left: 50%;
-        width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
+      .btn {
+        :not(:last-child) {
+          margin-right: 1.5rem;
+        }
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+
+        :hover:before,
+        :focus:before {
+          border-radius: 50%;
+          content: '';
+          height: 2.25rem;
+          width: 2.25rem;
+          position: absolute;
+          transform: translate(-50%, -50%);
+          top: 50%;
+          left: 50%;
+          background: ${theme.colors.accent.opacity(0.1)};
+        }
       }
     }
 
-    :hover .del-btn {
-      display: flex;
-    }
+    :hover, :focus-within {
+      .action-buttons {
+        visibility: visible;
+      }
+    } 
 
     .entry-count {
       margin-left: 0.25rem;

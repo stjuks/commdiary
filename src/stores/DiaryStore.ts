@@ -53,6 +53,14 @@ class DiaryStore {
   };
 
   @action
+  editDiary = (diaryId: number, values: any) => {
+    const index = this.diaries.findIndex((diary) => diary.id === diaryId);
+
+    this.diaries[index] = { ...this.diaries[index], ...values };
+    this.saveDiaries();
+  };
+
+  @action
   deleteEntry = (entryId: number) => {
     if (this.activeDiary) {
       this.activeDiary.entries = this.activeDiary.entries.filter((entry) => entry.id !== entryId);

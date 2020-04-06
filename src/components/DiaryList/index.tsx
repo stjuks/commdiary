@@ -6,8 +6,9 @@ import { Diary } from '@/types';
 import { DiaryListContainer, ListContainer, DiaryItemContainer } from './styles';
 import Button from '../Button';
 import DiaryForm from '../DiaryForm';
-import { FiTrash2 } from 'react-icons/fi';
+import { FiTrash2, FiEdit } from 'react-icons/fi';
 import AlertDialog from '../AlertDialog';
+import EditDiaryForm from '../EditDiaryForm';
 
 const DiaryList: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
@@ -40,6 +41,7 @@ const DiaryList: React.FC = observer(() => {
                   />
                 )
               }
+              onEdit={() => uiStore.openModal(<EditDiaryForm diary={diary} />)}
               key={diary.id}
             />
           ))}
@@ -57,13 +59,19 @@ const DiaryList: React.FC = observer(() => {
 interface DiaryItemProps {
   diary: Diary;
   setActive: (diaryId: number) => any;
-  onDelete: (diaryId: number) => any;
+  onDelete: () => any;
+  onEdit: () => any;
 }
 
-const DiaryItem: React.FC<DiaryItemProps> = ({ diary, setActive, onDelete }) => {
+const DiaryItem: React.FC<DiaryItemProps> = ({ diary, setActive, onDelete, onEdit }) => {
   const handleDelete = (event: React.MouseEvent) => {
     event.stopPropagation();
-    onDelete(diary.id);
+    onDelete();
+  };
+
+  const handleEdit = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onEdit();
   };
 
   return (
@@ -72,9 +80,14 @@ const DiaryItem: React.FC<DiaryItemProps> = ({ diary, setActive, onDelete }) => 
         <div className="diary-name">{diary.name}</div>
         <div className="entry-count">({diary.entries.length})</div>
       </button>
-      <button className="btn del-btn" onClick={handleDelete}>
-        <FiTrash2 />
-      </button>
+      <div className="action-buttons">
+        <button className="btn edit-btn" onClick={handleEdit}>
+          <FiEdit />
+        </button>
+        <button className="btn del-btn" onClick={handleDelete}>
+          <FiTrash2 />
+        </button>
+      </div>
     </DiaryItemContainer>
   );
 };
