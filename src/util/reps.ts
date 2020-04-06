@@ -10,9 +10,9 @@ const mistRep = {
     breathing: 'B - Hingamine',
     circulation: 'C - Pulss',
     responsiveness: 'D - Teadvus',
-    other: 'E - Muu'
+    other: 'E - Muu',
   },
-  treatment: 'T - Teostatud ravi'
+  treatment: 'T - Teostatud ravi',
 };
 
 const aaRep = {
@@ -20,12 +20,12 @@ const aaRep = {
   direction: {
     __label: 'A - Õhuründevahendi suund',
     inbound: 'Tulekusuund',
-    outbound: 'Minekusuund'
+    outbound: 'Minekusuund',
   },
   count: 'B - Õhuründevahendite arv',
   vehicleType: 'C - Õhuründevahendi tüüp',
   height: 'D - Õhuründevahendi kõrgus',
-  activity: 'E - Õhuründevahendi tegevus'
+  activity: 'E - Õhuründevahendi tegevus',
 };
 
 const bombRep = {
@@ -38,14 +38,14 @@ const bombRep = {
   area: {
     __label: 'F - Tulistatud ala',
     position: '1. Asukoht',
-    size: '2. Ala suurus'
+    size: '2. Ala suurus',
   },
   arms: 'G - Relvade arv ja tüüp',
   attackType: 'H - Rünnaku tüüp',
   caliber: 'I - Arv, tüüp, kaliiber',
   totalTime: 'J - Aeg sähvatusest plahvatuseni',
   damages: 'K - Tekitatud kahju',
-  notes: 'L - Märkused'
+  notes: 'L - Märkused',
 };
 
 const contactRep = {
@@ -54,7 +54,7 @@ const contactRep = {
   enemySize: 'B - Vastase suurus ja tegevus',
   enemyPosition: 'C - Vastase asukoht',
   other: 'D - Muu',
-  proceedings: 'E - Edasised tegevused'
+  proceedings: 'E - Edasised tegevused',
 };
 
 const intRep = {
@@ -66,8 +66,8 @@ const intRep = {
     __label: 'D - Hinnang',
     credibility: '1. Andmete usaldusväärsus',
     conclusion: '2. Järeldused',
-    summary: '3. Kokkuvõte'
-  }
+    summary: '3. Kokkuvõte',
+  },
 };
 
 const jamRep = {
@@ -80,7 +80,7 @@ const jamRep = {
   hiLoFrequencies: 'F - Kõrgem ja madalam segatud sagedus',
   direction: 'G - Suund',
   identification: 'H - Võimalik ID',
-  response: 'I - Rakendatud vastutegevus'
+  response: 'I - Rakendatud vastutegevus',
 };
 
 const nineLiner = {
@@ -93,7 +93,7 @@ const nineLiner = {
   safety: '6. Üleandmiskoha turvalisus',
   identification: '7. Üleandmiskoha märkimise viis',
   nationality: '8. Haavatu rahvus ja seisukord',
-  description: '9. ABK reostus, maandumiskoha kirjeldus'
+  description: '9. ABK reostus, maandumiskoha kirjeldus',
 };
 
 const quickSitRep = {
@@ -101,7 +101,19 @@ const quickSitRep = {
   enemy: 'A - Vastane',
   allies: 'B - Omad üksused',
   equipment: 'C - LaTe',
-  other: 'D - Muu'
+  other: 'D - Muu',
+};
+
+const recoveryRep = {
+  __type: 'RECOVERYREQ',
+  unit: 'A - Üksus',
+  when: 'B - Millal juhtus',
+  what: 'C - Mis juhtus',
+  support: 'D - Millist toetust vajatakse',
+  where: 'E - Kus juhtus',
+  destination: 'F - vedu kuhu',
+  point: 'G - RV punkt',
+  other: 'H - Lisainfo',
 };
 
 export interface RepSubField {
@@ -122,7 +134,8 @@ const reps: { [key in RepType]: RepStructure } = {
   CONTACTREP: contactRep,
   BOMBREP: bombRep,
   AAREP: aaRep,
-  MIST: mistRep
+  MIST: mistRep,
+  RECOVERYREQ: recoveryRep
 };
 
 export default reps;

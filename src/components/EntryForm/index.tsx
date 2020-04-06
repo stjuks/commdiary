@@ -24,12 +24,12 @@ const initialValues: EntryFormValues = {
   to: '',
   content: '',
   rep: {
-    type: undefined
-  }
+    type: undefined,
+  },
 };
 
 const validationSchema = yup.object({
-  content: yup.string()
+  content: yup.string(),
 });
 
 const repOptions: RepType[] = [
@@ -40,7 +40,8 @@ const repOptions: RepType[] = [
   'INTREP',
   'AAREP',
   'NINELINER',
-  'BOMBREP'
+  'BOMBREP',
+  'RECOVERYREQ',
 ];
 
 const EntryForm: React.FC = observer(() => {
@@ -75,7 +76,7 @@ const EntryFormComponent: React.FC = observer(() => {
     }
   };
 
-  const onSubmit = event => {
+  const onSubmit = (event) => {
     handleSubmit(event);
     focusContentInput();
   };
@@ -113,9 +114,10 @@ const EntryFormComponent: React.FC = observer(() => {
       'control+shift+a, meta+shift+a': () => displayRep('AAREP'),
       'control+shift+9, meta+shift+9': () => displayRep('NINELINER'),
       'control+shift+b, meta+shift+b': () => displayRep('BOMBREP'),
+      'control+shift+r, meta+shift+r': () => displayRep('RECOVERYREQ'),
       'shift+arrowup, shift+arrowup': () => selectPreviousRecipients(true),
       arrowup: selectPreviousRecipients,
-      arrowdown: resetForm
+      arrowdown: resetForm,
     },
     [values]
   );
@@ -129,7 +131,7 @@ const EntryFormComponent: React.FC = observer(() => {
             name="rep.type"
             onChange={(type, form) => form.setFieldValue('rep', { type })}
             options={repOptions}
-            optionLabel={option => option}
+            optionLabel={(option) => option}
             style={{ width: '5rem' }}
           />
           <TextInput name="to" label="Kellele" style={{ width: '5rem' }} />

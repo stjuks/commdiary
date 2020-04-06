@@ -22,7 +22,8 @@ type RepType =
   | 'INTREP'
   | 'AAREP'
   | 'NINELINER'
-  | 'BOMBREP';
+  | 'BOMBREP'
+  | 'RECOVERYREQ';
 
 export interface Rep {
   type: RepType | undefined;
