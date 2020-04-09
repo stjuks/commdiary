@@ -82,6 +82,13 @@ class DiaryStore {
   };
 
   @action
+  findDiaries = (diaryIds: Array<string | number>) => {
+    const numberIds = diaryIds.map((diaryId) => Number(diaryId));
+
+    return this.diaries.filter((diary) => numberIds.indexOf(diary.id) !== -1);
+  };
+
+  @action
   exportDiaries = async (diaryIds: number[]) => {
     const diaries = this.diaries.filter((diary) => diaryIds.includes(diary.id));
 

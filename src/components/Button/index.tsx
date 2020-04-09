@@ -4,6 +4,7 @@ import { ButtonContainer } from './styles';
 interface ButtonProps {
   form?: string;
   type?: 'button' | 'submit' | 'reset';
+  id?: string;
   title: string;
   onClick?: (event: React.MouseEvent) => any;
   className?: string;

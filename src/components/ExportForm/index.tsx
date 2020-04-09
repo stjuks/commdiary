@@ -6,16 +6,29 @@ import Checkbox, { CheckboxValue } from '../Checkbox';
 import DiaryStoreContext from '@/stores/DiaryStore';
 import { observer } from 'mobx-react-lite';
 import { Formik, FormikProps } from 'formik';
+import { Diary } from '@/types';
 
 const initialValues = {
-  diaries: []
+  diaries: [],
 };
 
 const ExportForm: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
 
-  const handleSubmit = ({ diaries }) => {
+  /* const handleSubmit = ({ diaries }) => {
     diaryStore.exportDiaries(diaries);
+  }; */
+
+  const handleSubmit = (formikProps: FormikProps<any>, mode: 'print' | 'json') => {
+    const { diaries } = formikProps.values;
+
+    if (formikProps.isValid) {
+      if (mode === 'json') {
+        diaryStore.exportDiaries(diaries);
+      } else if (mode === 'print') {
+        window.open(`/print?${diaries.map((id) => `diaryId=${id}`).join('&')}`);
+      }
+    }
   };
 
   const handleSelectAll = ({ checked, value, name }: CheckboxValue, form: FormikProps<any>) => {
@@ -24,7 +37,7 @@ const ExportForm: React.FC = observer(() => {
   };
 
   const validationSchema = yup.object({
-    diaries: yup.array().required('Vali vähemalt üks päevik.')
+    diaries: yup.array().required('Vali vähemalt üks päevik.'),
   });
 
   return (
@@ -33,27 +46,39 @@ const ExportForm: React.FC = observer(() => {
       <ExportFormContainer className="modal-body">
         <Formik
           initialValues={initialValues}
-          onSubmit={handleSubmit}
+          onSubmit={() => void 0}
           validationSchema={validationSchema}
+          isInitialValid={false}
           validateOnBlur={false}
         >
-          {formikProps => (
+          {(formikProps) => (
             <form onSubmit={formikProps.handleSubmit}>
               <Checkbox
                 className="select-all"
                 label="Kõik"
-                value={diaryStore.diaries.map(diary => diary.id)}
+                value={diaryStore.diaries.map((diary) => diary.id)}
                 name="diaries"
-                checked={value => value.length === formikProps.values.diaries.length}
+                checked={(value) => value.length === formikProps.values.diaries.length}
                 onChange={handleSelectAll}
               />
               <div className="checkboxes">
-                {diaryStore.diaries.map(diary => (
+                {diaryStore.diaries.map((diary) => (
                   <Checkbox name="diaries" value={diary.id} label={diary.name} key={diary.id} />
                 ))}
               </div>
               <div className="error-message">{formikProps.errors.diaries}</div>
-              <Button title="Ekspordi" type="submit" />
+              <Button
+                id="jsonBtn"
+                title="Ekspordi JSON"
+                type="submit"
+                onClick={() => handleSubmit(formikProps, 'json')}
+              />
+              <Button
+                id="printBtn"
+                title="Prindi"
+                type="submit"
+                onClick={() => handleSubmit(formikProps, 'print')}
+              />
             </form>
           )}
         </Formik>
