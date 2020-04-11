@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { PrintableDiariesContainer, DiaryTableContainer } from './styles';
-import { Diary } from '@/types';
+import { Diary, Rep } from '@/types';
 import { useParams, useLocation } from 'react-router-dom';
 import DiaryStoreContext from '@/stores/DiaryStore';
 import { formatDateToDTG } from '@/util/helpers';
+import reps from '@/util/reps';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -24,7 +25,7 @@ const PrintableDiaries: React.FC = () => {
 
   useEffect(() => {
     if (diaries.length > 0) {
-      window.print();
+      // window.print();
     }
   }, [diaries]);
 
@@ -42,6 +43,35 @@ interface DiaryTableProps {
 }
 
 const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
+  const buildRep = (rep: Rep) => {
+    if (rep.type) {
+      const repStructure = reps[rep.type];
+
+      return (
+        <div className="rep">
+          <div className="rep-title">{rep.type}</div>
+          {Object.entries(repStructure).map(([key, label]) => {
+            if (typeof label === 'string' && key !== '__type') {
+              return (
+                <div>
+                  <span className="rep-label">{label.split(' ')[0]}</span>
+                  <span className="rep-value">{rep[key]}</span>
+                </div>
+              );
+            }
+
+            if (key !== '__type') {
+              return Object.entries(label).map(([, subLabel]) => (
+                <div className="rep-label">{subLabel.split(' ')[0]}</div>
+              ));
+            }
+
+            return null;
+          })}
+        </div>
+      );
+    }
+  };
   return (
     <DiaryTableContainer>
       <h1 className="diary-name">{diary.name}</h1>
@@ -54,13 +84,16 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
           <span className="heading">Sisu</span>
         </span>
         {diary.entries.map((entry, index) => (
-          <span className="row" key={entry.id}>
-            <span>{index + 1}</span>
-            <span>{formatDateToDTG(entry.time)}</span>
-            <span>{entry.from || '-'}</span>
-            <span>{entry.to || '-'}</span>
-            <span>{entry.content || '-'}</span>
-          </span>
+          <div className="row-wrapper">
+            <span className="row" key={entry.id}>
+              <span>{index + 1}</span>
+              <span>{formatDateToDTG(entry.time)}</span>
+              <span>{entry.from || '-'}</span>
+              <span>{entry.to || '-'}</span>
+              <span>{entry.content || '-'}</span>
+            </span>
+            {buildRep(entry.rep)}
+          </div>
         ))}
       </div>
     </DiaryTableContainer>

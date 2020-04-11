@@ -17,6 +17,12 @@ class DiaryStore {
 
     if (activeDiaryId) this.activeDiaryId = activeDiaryId;
     if (diaries) this.diaries = diaries;
+
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'diaries' && event.newValue) {
+        this.diaries = JSON.parse(event.newValue);
+      }
+    });
   }
 
   @action

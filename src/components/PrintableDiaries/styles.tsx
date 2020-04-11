@@ -19,25 +19,34 @@ export const DiaryTableContainer = styled.div`
   }
 
   .table-container {
-    border: 1px solid rgba(0, 0, 0, .25);
+    border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 4px;
+    font-size: 12px;
 
     .heading {
       font-weight: 700;
     }
   }
 
+  .row-wrapper:nth-child(odd),
+  .header {
+    background: rgba(0, 0, 0, .05);
+  }
+
   .row {
-    font-size: 12px;
     display: grid;
     grid-template-columns: 48px 96px 48px 48px 1fr;
 
     > span {
       padding: 8px;
     }
+  }
 
-    :nth-child(odd) {
-      background: rgba(0, 0, 0, .05);
+  .rep {
+    padding: 8px;
+
+    .rep-title {
+      font-weight: 700;
     }
   }
 `;

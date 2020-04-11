@@ -19,8 +19,8 @@ const aaRep = {
   __type: 'AAREP',
   direction: {
     __label: 'A - Õhuründevahendi suund',
-    inbound: 'Tulekusuund',
-    outbound: 'Minekusuund',
+    inbound: '1. Tulekusuund',
+    outbound: '2. Minekusuund',
   },
   count: 'B - Õhuründevahendite arv',
   vehicleType: 'C - Õhuründevahendi tüüp',
