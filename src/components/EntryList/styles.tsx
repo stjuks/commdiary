@@ -5,7 +5,8 @@ export const EntryListContainer = styled.div`
   flex-direction: column;
   padding: 1rem;
   min-height: 10rem;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export const EntryItemContainer = styled.div`

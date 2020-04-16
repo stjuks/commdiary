@@ -182,5 +182,10 @@ export const GlobalStyle = createGlobalStyle`
         background: rgba(0, 0, 0, .75);
       }
     }
+
+    option {
+      background: white;
+      color: black;
+    }
   `}
 `;

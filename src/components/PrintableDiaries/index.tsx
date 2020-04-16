@@ -1,23 +1,25 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { PrintableDiariesContainer, DiaryTableContainer } from './styles';
 import { Diary, Rep } from '@/types';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, RouteComponentProps, Link } from 'react-router-dom';
 import DiaryStoreContext from '@/stores/DiaryStore';
 import { formatDateToDTG } from '@/util/helpers';
 import reps from '@/util/reps';
+import { FiChevronLeft } from 'react-icons/fi';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const PrintableDiaries: React.FC = () => {
+const PrintableDiaries: React.FC<RouteComponentProps> = ({ location }) => {
   const diaryStore = useContext(DiaryStoreContext);
   const [diaries, setDiaries] = useState<Diary[]>([]);
 
   const query = useQuery();
 
   useEffect(() => {
-    const diaryIds = query.getAll('diaryId');
+    const { diaries: diaryIds }: any = location.state;
+    console.log(diaryIds);
     const foundDiaries = diaryStore.findDiaries(diaryIds);
 
     setDiaries(foundDiaries);
@@ -25,7 +27,7 @@ const PrintableDiaries: React.FC = () => {
 
   useEffect(() => {
     if (diaries.length > 0) {
-      // window.print();
+      window.print();
     }
   }, [diaries]);
 
@@ -53,7 +55,7 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
           {Object.entries(repStructure).map(([key, label]) => {
             if (typeof label === 'string' && key !== '__type') {
               return (
-                <div>
+                <div key={key}>
                   <span className="rep-label">{label.split(' ')[0]}</span>
                   <span className="rep-value">{rep[key]}</span>
                 </div>
@@ -61,9 +63,18 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
             }
 
             if (key !== '__type') {
-              return Object.entries(label).map(([, subLabel]) => (
-                <div className="rep-label">{subLabel.split(' ')[0]}</div>
-              ));
+              return Object.entries(label).map(([subKey, subLabel]) =>
+                subKey !== '__label' ? (
+                  <div key={subKey}>
+                    <span className="rep-label sub-label">{subLabel.split(' ')[0]}</span>
+                    <span className="rep-value">{rep[key][subKey]}</span>
+                  </div>
+                ) : (
+                  <div className="rep-label" key={subKey}>
+                    {subLabel.split(' ')[0]}
+                  </div>
+                )
+              );
             }
 
             return null;
@@ -74,6 +85,9 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
   };
   return (
     <DiaryTableContainer>
+      <Link to="/" className="back-link">
+        <FiChevronLeft /> Tagasi
+      </Link>
       <h1 className="diary-name">{diary.name}</h1>
       <div className="table-container">
         <span className="row header">
@@ -84,8 +98,8 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
           <span className="heading">Sisu</span>
         </span>
         {diary.entries.map((entry, index) => (
-          <div className="row-wrapper">
-            <span className="row" key={entry.id}>
+          <div className="row-wrapper" key={entry.id}>
+            <span className="row">
               <span>{index + 1}</span>
               <span>{formatDateToDTG(entry.time)}</span>
               <span>{entry.from || '-'}</span>

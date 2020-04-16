@@ -105,6 +105,8 @@ class DiaryStore {
     const href = await URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = href;
+    link.rel = 'noopener noreferrer';
+    link.target = '_blank';
     link.download = fileName;
     document.body.appendChild(link);
     link.click();

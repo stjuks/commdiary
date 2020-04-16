@@ -1,8 +1,9 @@
 import styled from '@/util/styled';
+import { buttonStyles } from '../Button/styles';
 
 export const ExportFormContainer = styled.div`
   ${({ theme }) => `
-    button {
+    button, a {
       width: 100%;
       margin-top: 0.5rem;
     }
@@ -22,6 +23,11 @@ export const ExportFormContainer = styled.div`
       .label {
         color: ${theme.colors.white};
       }
+    }
+
+    .print-btn {
+      width: 100%;
+      ${buttonStyles(theme)}
     }
 
     .error-message {

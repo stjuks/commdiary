@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { ExportFormContainer } from './styles';
+import { Link, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import Button from '../Button';
 import Checkbox, { CheckboxValue } from '../Checkbox';
 import DiaryStoreContext from '@/stores/DiaryStore';
+import UIStoreContext from '@/stores/UIStore';
 import { observer } from 'mobx-react-lite';
 import { Formik, FormikProps } from 'formik';
-import { Diary } from '@/types';
 
 const initialValues = {
   diaries: [],
@@ -14,10 +15,9 @@ const initialValues = {
 
 const ExportForm: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
+  const uiStore = useContext(UIStoreContext);
 
-  /* const handleSubmit = ({ diaries }) => {
-    diaryStore.exportDiaries(diaries);
-  }; */
+  const history = useHistory();
 
   const handleSubmit = (formikProps: FormikProps<any>, mode: 'print' | 'json') => {
     const { diaries } = formikProps.values;
@@ -26,7 +26,8 @@ const ExportForm: React.FC = observer(() => {
       if (mode === 'json') {
         diaryStore.exportDiaries(diaries);
       } else if (mode === 'print') {
-        window.open(`/print?${diaries.map((id) => `diaryId=${id}`).join('&')}`);
+        uiStore.closeModal();
+        history.push({ pathname: '/print', state: { diaries } });
       }
     }
   };

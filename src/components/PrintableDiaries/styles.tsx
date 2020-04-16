@@ -1,11 +1,30 @@
 import styled from '@/util/styled';
 
 export const PrintableDiariesContainer = styled.div`
-  margin: 1rem;
+  ${({ theme }) => `
+    margin: 1rem;
 
-  @media print {
-    margin: 0;
-  }
+    .back-link {
+      box-shadow: inset 0 -2px 0 ${theme.colors.accent};
+      color: ${theme.colors.accent};
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+
+      svg {
+        stroke-width: 3px;
+      }
+    }
+
+    @media print {
+      .back-link {
+        display: none;
+      }
+
+      margin: 0;
+    }
+  `}
 `;
 
 export const DiaryTableContainer = styled.div`
@@ -30,7 +49,7 @@ export const DiaryTableContainer = styled.div`
 
   .row-wrapper:nth-child(odd),
   .header {
-    background: rgba(0, 0, 0, .05);
+    background: rgba(0, 0, 0, 0.05);
   }
 
   .row {
@@ -45,7 +64,21 @@ export const DiaryTableContainer = styled.div`
   .rep {
     padding: 8px;
 
+    .rep-label {
+      font-weight: 700;
+    }
+
+    .sub-label {
+      margin-left: 0.5rem;
+    }
+
+    .rep-value {
+      margin-left: 0.5rem;
+    }
+
     .rep-title {
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
       font-weight: 700;
     }
   }

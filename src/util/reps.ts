@@ -15,6 +15,41 @@ const mistRep = {
   treatment: 'T - Teostatud ravi',
 };
 
+interface RepField {
+  name: string;
+  letter: string;
+  label: string;
+  subFields?: RepField[];
+}
+
+interface Rep {
+  name: RepType;
+  fields: RepField[];
+}
+
+const MIST: Rep = {
+  name: 'MIST',
+  fields: [
+    { name: 'mechanism', letter: 'M', label: 'M - Vigastuse mehhanism' },
+    { name: 'injuries', letter: 'I', label: 'I - Nähtavad/kahtlustatavad vigastused' },
+    {
+      name: 'signs',
+      letter: 'S',
+      label: 'S - Sümptomid',
+      subFields: [
+        { name: 'airways', letter: 'A', label: 'A - Õhuteed' },
+        { name: 'breathing', letter: 'B', label: 'B - Hingamine' },
+        { name: 'circulation', letter: 'C', label: 'C - Pulss' },
+        { name: 'responsiveness', letter: 'D', label: 'D - Teadvus' },
+        { name: 'other', letter: 'E', label: 'E - Muu' },
+      ],
+    },
+    { name: 'treatment', letter: 'T', label: 'T - Teostatud ravi' },
+  ],
+};
+
+
+
 const aaRep = {
   __type: 'AAREP',
   direction: {
@@ -135,7 +170,7 @@ const reps: { [key in RepType]: RepStructure } = {
   BOMBREP: bombRep,
   AAREP: aaRep,
   MIST: mistRep,
-  RECOVERYREQ: recoveryRep
+  RECOVERYREQ: recoveryRep,
 };
 
 export default reps;

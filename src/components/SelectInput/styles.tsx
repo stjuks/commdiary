@@ -10,6 +10,11 @@ export const SelectInputContainer = styled(TextInputContainer)`
 
     select {
       padding-right: 1.5rem;
+
+      option {
+        color: black;
+        background: white;
+      }
     }
 
     .indicator {
