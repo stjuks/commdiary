@@ -3,8 +3,8 @@ import { PrintableDiariesContainer, DiaryTableContainer } from './styles';
 import { Diary, Rep } from '@/types';
 import { useParams, useLocation, RouteComponentProps, Link } from 'react-router-dom';
 import DiaryStoreContext from '@/stores/DiaryStore';
-import { formatDateToDTG } from '@/util/helpers';
-import reps from '@/util/reps';
+import { formatDateToDTG, getObjectProperty } from '@/util/helpers';
+import reps, { RepFormField } from '@/util/reps';
 import { FiChevronLeft } from 'react-icons/fi';
 
 function useQuery() {
@@ -42,44 +42,24 @@ interface DiaryTableProps {
 }
 
 const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
-  /* const buildRep = (rep: Rep) => {
-    if (rep.type) {
-      const repStructure = reps[rep.type];
+  const buildRepFields = (fields: RepFormField[], rep: Rep, subFieldName?: string) => {
+    return fields.map((field, i) => {
+      const fieldName = subFieldName ? `${subFieldName}.${field.name}` : field.name;
 
-      return (
-        <div className="rep">
-          <div className="rep-title">{rep.type}</div>
-          {Object.entries(repStructure).map(([key, label]) => {
-            if (typeof label === 'string' && key !== '__type') {
-              return (
-                <div key={key}>
-                  <span className="rep-label">{label.split(' ')[0]}</span>
-                  <span className="rep-value">{rep[key]}</span>
-                </div>
-              );
-            }
-
-            if (key !== '__type') {
-              return Object.entries(label).map(([subKey, subLabel]) =>
-                subKey !== '__label' ? (
-                  <div key={subKey}>
-                    <span className="rep-label sub-label">{subLabel.split(' ')[0]}</span>
-                    <span className="rep-value">{rep[key][subKey]}</span>
-                  </div>
-                ) : (
-                  <div className="rep-label" key={subKey}>
-                    {subLabel.split(' ')[0]}
-                  </div>
-                )
-              );
-            }
-
-            return null;
-          })}
+      return field.subFields ? (
+        <React.Fragment key={i}>
+          <div className="sub-label">{field.letter}</div>
+          <div className="sub-fields">{buildRepFields(field.subFields, rep, fieldName)}</div>
+        </React.Fragment>
+      ) : (
+        <div className="field" key={i}>
+          <div className="field-label">{field.letter}</div>
+          <div className="field-value">{getObjectProperty(rep, fieldName) || '-'}</div>
         </div>
       );
-    }
-  };*/
+    });
+  };
+
   return (
     <DiaryTableContainer>
       <Link to="/" className="back-link">
@@ -103,7 +83,12 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
               <span>{entry.to || '-'}</span>
               <span>{entry.content || '-'}</span>
             </span>
-        {/* buildRep(entry.rep) */}
+            {entry.rep && (
+              <div className="rep">
+                <div className="rep-title">{entry.rep.type}</div>
+                {buildRepFields(reps[entry.rep.type].fields, entry.rep)}
+              </div>
+            )}
           </div>
         ))}
       </div>

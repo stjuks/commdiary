@@ -23,7 +23,7 @@ export interface RepStructure {
   [key: string]: string | RepSubField;
 }
 
-const reps: { [key in RepType]?: RepFormStructure } = {
+const reps: { [key in RepType]: RepFormStructure } = {
   MIST: {
     type: 'MIST',
     fields: [

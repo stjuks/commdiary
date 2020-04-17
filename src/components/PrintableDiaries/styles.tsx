@@ -5,8 +5,8 @@ export const PrintableDiariesContainer = styled.div`
     margin: 1rem;
 
     .back-link {
-      box-shadow: inset 0 -2px 0 ${theme.colors.accent};
-      color: ${theme.colors.accent};
+      box-shadow: inset 0 -1px 0 ${theme.colors.primary};
+      color: ${theme.colors.primary};
       display: flex;
       align-items: center;
       padding: 0.5rem;
@@ -47,6 +47,10 @@ export const DiaryTableContainer = styled.div`
     }
   }
 
+  .row-wrapper {
+    page-break-inside: avoid;
+  }
+
   .row-wrapper:nth-child(odd),
   .header {
     background: rgba(0, 0, 0, 0.05);
@@ -62,18 +66,25 @@ export const DiaryTableContainer = styled.div`
   }
 
   .rep {
-    padding: 8px;
+    padding: 4px 8px;
 
-    .rep-label {
+    .field {
+      display: flex;
+    }
+
+    .field,
+    .sub-label {
+      margin-bottom: 0.25rem;
+    }
+
+    .field-label,
+    .sub-label {
+      width: 16px;
       font-weight: 700;
     }
 
-    .sub-label {
-      margin-left: 0.5rem;
-    }
-
-    .rep-value {
-      margin-left: 0.5rem;
+    .sub-fields {
+      padding-left: 16px;
     }
 
     .rep-title {
