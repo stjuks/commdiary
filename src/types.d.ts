@@ -23,10 +23,13 @@ type RepType =
   | 'AAREP'
   | 'NINELINER'
   | 'BOMBREP'
-  | 'RECOVERYREQ';
+  | 'RECOVERYREQ'
+  | 'SITREP'
+  | 'ENGSITREP'
+  | 'PERSREP';
 
 export interface Rep {
-  type: RepType | undefined;
+  type: RepType;
   [key: string]: string | object;
 }
 

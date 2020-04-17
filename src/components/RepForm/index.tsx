@@ -1,52 +1,40 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { RepFormContainer } from './styles';
-import { RepType } from '@/types';
-import reps, { RepStructure, RepSubField } from '@/util/reps';
-import { editProperty } from '@/util/helpers';
+import { RepFormStructure, RepFormField } from '@/util/reps';
 
 import TextInput from '../TextInput';
-import { useFormikContext } from 'formik';
 
 interface RepFormProps {
-  type?: RepType;
+  structure?: RepFormStructure;
 }
 
-const buildRepForm = (structure: RepStructure) => {
-  const buildSubField = (field: RepSubField, subFieldName: string) => {
-    return (
-      <React.Fragment key={subFieldName}>
-        <h5 className="sub-label">{field.__label}</h5>
-        <div className="input-row sub-row">
-          {Object.entries(field).map(([key, label]) => {
-            if (key !== '__label') {
-              return <TextInput name={`rep.${subFieldName}.${key}`} label={label} key={label} />;
-            }
-
-            return null;
-          })}
-        </div>
-      </React.Fragment>
+const RepForm: React.FC<RepFormProps> = ({ structure }) => {
+  const buildFields = (fields: RepFormField[], subFieldName?: string) => {
+    return fields.map((field, i) =>
+      field.subFields ? (
+        <React.Fragment key={i}>
+          <div className="sub-label">{field.letter} - {field.label}</div>
+          <div className="sub-fields">
+            {buildFields(
+              field.subFields,
+              subFieldName ? `${subFieldName}.${field.name}` : field.name
+            )}
+          </div>
+        </React.Fragment>
+      ) : (
+        <TextInput
+          key={i}
+          name={subFieldName ? `rep.${subFieldName}.${field.name}` : `rep.${field.name}`}
+          label={`${field.letter} - ${field.label}`}
+        />
+      )
     );
   };
 
-  return Object.entries(structure).map(([key, label]) => {
-    if (key !== '__type') {
-      if (typeof label === 'string') {
-        return <TextInput name={`rep.${key}`} label={label} key={label} />;
-      }
-
-      return buildSubField(label, key);
-    }
-
-    return null;
-  });
-};
-
-const RepForm: React.FC<RepFormProps> = ({ type }) => {
-  return type ? (
+  return structure ? (
     <RepFormContainer>
-      <h2 className="rep-title">{type}</h2>
-      <div className="rep-form">{buildRepForm(reps[type])}</div>
+      <h2 className="rep-title">{structure.type}</h2>
+      <div className="rep-form">{buildFields(structure.fields)}</div>
     </RepFormContainer>
   ) : null;
 };

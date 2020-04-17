@@ -1,3 +1,5 @@
+import packageJson from 'package.json';
+
 export const formatDateToDTG = (date: Date) => {
   const months = [
     'JAN',
@@ -11,15 +13,12 @@ export const formatDateToDTG = (date: Date) => {
     'SEP',
     'OCT',
     'NOV',
-    'DEC'
+    'DEC',
   ];
 
   if (!(date instanceof Date)) date = new Date(date);
 
-  const year = date
-    .getFullYear()
-    .toString()
-    .substring(2);
+  const year = date.getFullYear().toString().substring(2);
   const month: string | number = date.getMonth();
 
   let day: string | number = date.getDate();
@@ -88,4 +87,22 @@ export const editProperty = <T>(obj: T, path: string, editValue: any) => {
   }, obj);
 
   return obj;
+};
+
+export const getObjectProperty = (obj: object, path: string) => {
+  const properties = path.split('.');
+
+  const result = properties.reduce((prev, curr, index) => {
+    if (prev && typeof prev === 'object') {
+      if (prev[curr] === undefined) {
+        return undefined;
+      }
+
+      return prev[curr];
+    }
+
+    return undefined;
+  }, obj);
+
+  return result;
 };

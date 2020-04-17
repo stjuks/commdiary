@@ -15,11 +15,8 @@ const PrintableDiaries: React.FC<RouteComponentProps> = ({ location }) => {
   const diaryStore = useContext(DiaryStoreContext);
   const [diaries, setDiaries] = useState<Diary[]>([]);
 
-  const query = useQuery();
-
   useEffect(() => {
     const { diaries: diaryIds }: any = location.state;
-    console.log(diaryIds);
     const foundDiaries = diaryStore.findDiaries(diaryIds);
 
     setDiaries(foundDiaries);
@@ -45,7 +42,7 @@ interface DiaryTableProps {
 }
 
 const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
-  const buildRep = (rep: Rep) => {
+  /* const buildRep = (rep: Rep) => {
     if (rep.type) {
       const repStructure = reps[rep.type];
 
@@ -82,7 +79,7 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
         </div>
       );
     }
-  };
+  };*/
   return (
     <DiaryTableContainer>
       <Link to="/" className="back-link">
@@ -106,7 +103,7 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
               <span>{entry.to || '-'}</span>
               <span>{entry.content || '-'}</span>
             </span>
-            {buildRep(entry.rep)}
+        {/* buildRep(entry.rep) */}
           </div>
         ))}
       </div>

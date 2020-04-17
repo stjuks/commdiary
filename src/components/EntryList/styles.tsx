@@ -98,5 +98,27 @@ export const EntryItemContainer = styled.div`
     .timestamp {
       margin-left: auto;
     }
+
+    [contentEditable=true] {
+      position: relative;
+      cursor: pointer;
+
+      :hover,
+      :focus {
+        :before {
+          transform: translate(-50%, -50%);
+          top: 50%;
+          left: 50%;
+          padding: 0.125rem 0.25rem;
+          border-radius: 0.25rem;
+          background: ${theme.colors.accent.opacity(0.05)};
+          z-index: -1;
+          content: '';
+          position: absolute;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
   `}
 `;

@@ -1,155 +1,17 @@
 import { RepType } from '@/types';
 
-const mistRep = {
-  __type: 'MIST',
-  mechanism: 'M - vigastuse mehhanism',
-  injuries: 'I - Nähtavad/kahtlustatavad vigastused',
-  signs: {
-    __label: 'S - Sümptomid',
-    airways: 'A - Õhuteed',
-    breathing: 'B - Hingamine',
-    circulation: 'C - Pulss',
-    responsiveness: 'D - Teadvus',
-    other: 'E - Muu',
-  },
-  treatment: 'T - Teostatud ravi',
-};
-
-interface RepField {
+export interface RepFormField {
   name: string;
   letter: string;
   label: string;
-  subFields?: RepField[];
+  columns?: RepFormField[];
+  subFields?: RepFormField[];
 }
 
-interface Rep {
-  name: RepType;
-  fields: RepField[];
+export interface RepFormStructure {
+  type: RepType;
+  fields: RepFormField[];
 }
-
-const MIST: Rep = {
-  name: 'MIST',
-  fields: [
-    { name: 'mechanism', letter: 'M', label: 'M - Vigastuse mehhanism' },
-    { name: 'injuries', letter: 'I', label: 'I - Nähtavad/kahtlustatavad vigastused' },
-    {
-      name: 'signs',
-      letter: 'S',
-      label: 'S - Sümptomid',
-      subFields: [
-        { name: 'airways', letter: 'A', label: 'A - Õhuteed' },
-        { name: 'breathing', letter: 'B', label: 'B - Hingamine' },
-        { name: 'circulation', letter: 'C', label: 'C - Pulss' },
-        { name: 'responsiveness', letter: 'D', label: 'D - Teadvus' },
-        { name: 'other', letter: 'E', label: 'E - Muu' },
-      ],
-    },
-    { name: 'treatment', letter: 'T', label: 'T - Teostatud ravi' },
-  ],
-};
-
-
-
-const aaRep = {
-  __type: 'AAREP',
-  direction: {
-    __label: 'A - Õhuründevahendi suund',
-    inbound: '1. Tulekusuund',
-    outbound: '2. Minekusuund',
-  },
-  count: 'B - Õhuründevahendite arv',
-  vehicleType: 'C - Õhuründevahendi tüüp',
-  height: 'D - Õhuründevahendi kõrgus',
-  activity: 'E - Õhuründevahendi tegevus',
-};
-
-const bombRep = {
-  __type: 'BOMBREP',
-  unit: 'A - Üksus',
-  spotterPosition: 'B - Vaatleja asukoht',
-  direction: 'C - Suund ja langemisnurk',
-  startTime: 'D - Rünnaku alguse aeg',
-  endTime: 'E - Rünnaku lõpu aeg',
-  area: {
-    __label: 'F - Tulistatud ala',
-    position: '1. Asukoht',
-    size: '2. Ala suurus',
-  },
-  arms: 'G - Relvade arv ja tüüp',
-  attackType: 'H - Rünnaku tüüp',
-  caliber: 'I - Arv, tüüp, kaliiber',
-  totalTime: 'J - Aeg sähvatusest plahvatuseni',
-  damages: 'K - Tekitatud kahju',
-  notes: 'L - Märkused',
-};
-
-const contactRep = {
-  __type: 'CONTACTREP',
-  time: 'A - Kontakti toimumise aeg',
-  enemySize: 'B - Vastase suurus ja tegevus',
-  enemyPosition: 'C - Vastase asukoht',
-  other: 'D - Muu',
-  proceedings: 'E - Edasised tegevused',
-};
-
-const intRep = {
-  __type: 'INTREP',
-  description: 'A - Tegevuse kirjeldus',
-  time: 'B - Millal?',
-  position: 'C - Kus?',
-  rating: {
-    __label: 'D - Hinnang',
-    credibility: '1. Andmete usaldusväärsus',
-    conclusion: '2. Järeldused',
-    summary: '3. Kokkuvõte',
-  },
-};
-
-const jamRep = {
-  __type: 'JAMREP',
-  position: 'A - Segatud raadio asukoht',
-  radioType: 'B - Raadio tüüp ja mark',
-  time: 'C - DTG',
-  frequency: 'D - Raadiosagedus ja võrk',
-  characteristics: 'E - Segamise loomus ja võimsus',
-  hiLoFrequencies: 'F - Kõrgem ja madalam segatud sagedus',
-  direction: 'G - Suund',
-  identification: 'H - Võimalik ID',
-  response: 'I - Rakendatud vastutegevus',
-};
-
-const nineLiner = {
-  __type: 'NINELINER',
-  location: '1. Üleandmise paiga asukoht',
-  callSign: '2. Sagedus/kutsung üleandmise kohas',
-  casualtyCount: '3. Haavatute arv prioriteetide kaupa',
-  equipment: '4. Erivarustus',
-  casualtyType: '5. Haavatute arv tüübi järgi',
-  safety: '6. Üleandmiskoha turvalisus',
-  identification: '7. Üleandmiskoha märkimise viis',
-  nationality: '8. Haavatu rahvus ja seisukord',
-  description: '9. ABK reostus, maandumiskoha kirjeldus',
-};
-
-const quickSitRep = {
-  __type: 'QUICKSITREP',
-  enemy: 'A - Vastane',
-  allies: 'B - Omad üksused',
-  equipment: 'C - LaTe',
-  other: 'D - Muu',
-};
-
-const recoveryRep = {
-  __type: 'RECOVERYREQ',
-  unit: 'A - Üksus',
-  when: 'B - Millal juhtus',
-  what: 'C - Mis juhtus',
-  support: 'D - Millist toetust vajatakse',
-  where: 'E - Kus juhtus',
-  destination: 'F - vedu kuhu',
-  point: 'G - RV punkt',
-  other: 'H - Lisainfo',
-};
 
 export interface RepSubField {
   __label: string;
@@ -161,16 +23,245 @@ export interface RepStructure {
   [key: string]: string | RepSubField;
 }
 
-const reps: { [key in RepType]: RepStructure } = {
-  QUICKSITREP: quickSitRep,
-  NINELINER: nineLiner,
-  JAMREP: jamRep,
-  INTREP: intRep,
-  CONTACTREP: contactRep,
-  BOMBREP: bombRep,
-  AAREP: aaRep,
-  MIST: mistRep,
-  RECOVERYREQ: recoveryRep,
+const reps: { [key in RepType]?: RepFormStructure } = {
+  MIST: {
+    type: 'MIST',
+    fields: [
+      { name: 'mechanism', letter: 'M', label: 'Vigastuse mehhanism' },
+      { name: 'injuries', letter: 'I', label: 'Nähtavad/kahtlustatavad vigastused' },
+      {
+        name: 'signs',
+        letter: 'S',
+        label: 'Sümptomid',
+        subFields: [
+          { name: 'airways', letter: 'A', label: 'Õhuteed' },
+          { name: 'breathing', letter: 'B', label: 'Hingamine' },
+          { name: 'circulation', letter: 'C', label: 'Pulss' },
+          { name: 'responsiveness', letter: 'D', label: 'Teadvus' },
+          {
+            name: 'other',
+            letter: 'E',
+            label: 'Muu',
+          },
+        ],
+      },
+      { name: 'treatment', letter: 'T', label: 'Teostatud ravi' },
+    ],
+  },
+  CONTACTREP: {
+    type: 'CONTACTREP',
+    fields: [
+      { name: 'time', letter: 'A', label: 'Kontakti toimumise aeg' },
+      { name: 'enemySize', letter: 'B', label: 'Vastase suurus ja aeg' },
+      { name: 'enemyPosition', letter: 'C', label: 'Vastase asukoht' },
+      { name: 'other', letter: 'D', label: 'Muu' },
+      { name: 'proceedings', letter: 'E', label: 'Edasised tegevused' },
+    ],
+  },
+  AAREP: {
+    type: 'AAREP',
+    fields: [
+      {
+        name: 'direction',
+        letter: 'A',
+        label: 'Õhuründevahendi suund',
+        subFields: [
+          { name: 'inbound', letter: '1', label: 'Tulekusuund' },
+          { name: 'outbound', letter: '2', label: 'Minekusuund' },
+        ],
+      },
+      { name: 'count', letter: 'B', label: 'Õhuründevahendite arv' },
+      { name: 'vehicleType', letter: 'C', label: 'Õhuründevahendi tüüp' },
+      { name: 'height', letter: 'D', label: 'Õhuründevahendi kõrgus' },
+      { name: 'activity', letter: 'E', label: 'Õhuründevahendi tegevus' },
+    ],
+  },
+  BOMBREP: {
+    type: 'BOMBREP',
+    fields: [
+      { name: 'unit', letter: 'A', label: 'Üksus' },
+      { name: 'spotterPosition', letter: 'B', label: 'Vaatleja asukoht' },
+      { name: 'direction', letter: 'C', label: 'Suund ja langemisnurk' },
+      { name: 'startTime', letter: 'D', label: 'Rünnaku alguse aeg' },
+      { name: 'endTime', letter: 'E', label: 'Rünnaku lõpu aeg' },
+      {
+        name: 'area',
+        letter: 'F',
+        label: 'Tulistatud ala',
+        subFields: [
+          { name: 'position', letter: '1', label: 'Asukoht' },
+          { name: 'size', letter: '2', label: 'Ala suurus' },
+        ],
+      },
+      { name: 'arms', letter: 'G', label: 'Relvade arv ja tüüp' },
+      { name: 'attackType', letter: 'H', label: 'Rünnaku tüüp' },
+      { name: 'caliber', letter: 'I', label: 'Arv, tüüp, kaliiber' },
+      { name: 'totalTime', letter: 'J', label: 'Aeg sähvatusest plahvatuseni' },
+      { name: 'damages', letter: 'K', label: 'Tekitatud kahju' },
+      { name: 'notes', letter: 'L', label: 'Märkused' },
+    ],
+  },
+  INTREP: {
+    type: 'INTREP',
+    fields: [
+      { name: 'description', letter: 'A', label: 'Tegevuse kirjeldus' },
+      { name: 'time', letter: 'B', label: 'Millal?' },
+      { name: 'position', letter: 'C', label: 'Kus?' },
+      {
+        name: 'rating',
+        letter: 'D',
+        label: 'Hinnang',
+        subFields: [
+          { name: 'credibility', letter: '1', label: 'Andmete usaldusväärsus' },
+          { name: 'conclusion', letter: '2', label: 'Järeldused' },
+          { name: 'summary', letter: '3', label: 'Kokkuvõte' },
+        ],
+      },
+    ],
+  },
+  JAMREP: {
+    type: 'JAMREP',
+    fields: [
+      { name: 'position', letter: 'A', label: 'Segatud raadio asukoht' },
+      { name: 'radioType', letter: 'B', label: 'Raadio tüüp ja mark' },
+      { name: 'time', letter: 'C', label: 'DTG' },
+      { name: 'frequency', letter: 'D', label: 'Raadiosagedus ja võrk' },
+      { name: 'characteristics', letter: 'E', label: 'Segamise loomus ja võimsus' },
+      { name: 'hiLoFrequencies', letter: 'F', label: 'Kõrgem ja madalam segatud sagedus' },
+      { name: 'direction', letter: 'G', label: 'Suund' },
+      { name: 'identification', letter: 'H', label: 'Võimalik ID' },
+      { name: 'response', letter: 'I', label: 'Rakendatud vastutegevus' },
+    ],
+  },
+  NINELINER: {
+    type: 'NINELINER',
+    fields: [
+      { name: 'location', letter: '1', label: 'Üleandmise paiga asukoht' },
+      { name: 'callSign', letter: '2', label: 'Sagedus/kutsung üleandmise asukohas' },
+      { name: 'casualtyCount', letter: '3', label: 'Haavatute arv prioriteetide kaupa' },
+      { name: 'equipment', letter: '4', label: 'Erivarustus' },
+      { name: 'casualtyType', letter: '5', label: 'Haavatute arv tüübi järgi' },
+      { name: 'safety', letter: '6', label: 'Üleandmiskoha turvalisus' },
+      { name: 'identification', letter: '7', label: 'Üleandmiskoha märkimise viis' },
+      { name: 'nationality', letter: '8', label: 'Haavatu rahvus ja seisukord' },
+      { name: 'description', letter: '9', label: 'ABK reostus, maandumiskoha kirjeldus' },
+    ],
+  },
+  QUICKSITREP: {
+    type: 'QUICKSITREP',
+    fields: [
+      { name: 'enemy', letter: 'A', label: 'Vastane' },
+      { name: 'allies', letter: 'B', label: 'Omad üksused' },
+      { name: 'equipment', letter: 'C', label: 'LaTe' },
+      { name: 'other', letter: 'D', label: 'Muu' },
+    ],
+  },
+  RECOVERYREQ: {
+    type: 'RECOVERYREQ',
+    fields: [
+      { name: 'unit', letter: 'A', label: 'Üksus' },
+      { name: 'when', letter: 'B', label: 'Millal juhtus?' },
+      { name: 'what', letter: 'C', label: 'Mis juhtus?' },
+      { name: 'support', letter: 'D', label: 'Millist toetust vajatakse?' },
+      { name: 'where', letter: 'E', label: 'Kus juhtus?' },
+      { name: 'destination', letter: 'F', label: 'Kuhu veetakse?' },
+      { name: 'point', letter: 'G', label: 'RV punkt' },
+      { name: 'other', letter: 'H', label: 'Lisainfo' },
+    ],
+  },
+  SITREP: {
+    type: 'SITREP',
+    fields: [
+      {
+        name: 'situation',
+        letter: 'A',
+        label: 'Olukord',
+        subFields: [
+          { name: 'overall', letter: '1', label: 'Üldine olukord' },
+          { name: 'enemy', letter: '2', label: 'Vastane' },
+          { name: 'allies', letter: '3', label: 'Omad jõud' },
+        ],
+      },
+      { name: 'changes', letter: 'B', label: 'Lahinguolukorra muudatused' },
+      {
+        name: 'unit',
+        letter: 'C',
+        label: 'Alluvad üksused/allüksused',
+        subFields: [
+          { name: 'name', letter: '1', label: 'Nimetus' },
+          {
+            name: 'positions',
+            letter: '2',
+            label: 'JuPude praegused ja planeeritavad asukohad',
+          },
+          { name: 'mainActivity', letter: '3', label: 'Peamine tegevus' },
+          { name: 'plannedActivity', letter: '4', label: 'Planeeritav tegevus' },
+        ],
+      },
+      { name: 'notes', letter: 'D', label: 'Lisamärkused' },
+    ],
+  },
+  ENGSITREP: {
+    type: 'ENGSITREP',
+    fields: [
+      {
+        name: 'rating',
+        letter: 'A',
+        label: 'Üksuse/allüksuse lahinguvalmiduse hinnang',
+        subFields: [
+          { name: 'staff', letter: '1', label: 'Isikukoosseisu valmidus' },
+          { name: 'equipment', letter: '2', label: 'Varustuse/tehnika valmidus' },
+          {
+            name: 'pioneerEquipment',
+            letter: '3',
+            label: 'Pioneerimaterjalidega komplekteeritus',
+          },
+        ],
+      },
+      {
+        name: 'location',
+        letter: 'B',
+        label: 'Üksuse asukoht (JuPu)',
+        subFields: [
+          { name: 'actualLocation', letter: '1', label: 'Tegelik asukoht' },
+          { name: 'plannedLocation', letter: '2', label: 'Planeeritud asukoht' },
+          {
+            name: 'plannedDueTime',
+            letter: '3',
+            label: 'Planeeritud ülesande täitmise tähtaeg',
+          },
+        ],
+      },
+      { name: 'situation', letter: 'C', label: 'Ülesannete täitmise olukord' },
+      { name: 'other', letter: 'E', label: 'Muu' },
+    ],
+  },
+  PERSREP: {
+    type: 'PERSREP',
+    fields: [
+      {
+        name: 'staff',
+        letter: 'A',
+        label: 'Tegevväelased ja tsiviilpersonal',
+        columns: [
+          { name: 'enlisted', letter: 'F', label: 'Nimekirjas' },
+          { name: 'inService', letter: 'G', label: 'Teenistuses' },
+          { name: 'inDeployment', letter: 'H', label: 'Teenistuses' },
+          { name: 'vacation', letter: 'I', label: 'I - Puhkusel' },
+          { name: 'ill', letter: 'J', label: 'J - Haiged' },
+          { name: 'other', letter: 'K', label: 'K - Muu' },
+        ],
+        subFields: [
+          { name: 'officers', letter: '1', label: 'Ohvitserid' },
+          { name: 'nonCommOfficers', letter: '2', label: 'Allohvitserid' },
+          { name: 'soldiers', letter: '3', label: 'Sõdurid' },
+          { name: 'civilians', letter: '4', label: 'Tsiviilisikud' },
+          { name: 'staffSum', letter: '5', label: 'Tegevväelasi kokku' },
+          { name: 'sum', letter: '6', label: 'Kokku' },
+        ],
+      },
+    ],
+  },
 };
 
 export default reps;

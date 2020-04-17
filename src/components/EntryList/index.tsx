@@ -9,6 +9,7 @@ import DiaryStoreContext from '@/stores/DiaryStore';
 import UIStoreContext from '@/stores/UIStore';
 import { usePrevious } from '@/util/hooks';
 import RepDetails from '../RepDetails';
+import AlertDialog from '../AlertDialog';
 
 const EntryList: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
@@ -22,7 +23,7 @@ const EntryList: React.FC = observer(() => {
     if (listLength > prevLength) {
       animateScroll.scrollToBottom({
         containerId: 'entry-list-container',
-        duration: 200
+        duration: 200,
       });
     }
   }, [listLength]);
@@ -50,12 +51,13 @@ interface EntryItemProps {
 }
 
 const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit, openRep }) => {
+  const uiStore = useContext(UIStoreContext);
   const handleEdit = (event: React.FocusEvent<HTMLDivElement>) => {
     const { id, textContent } = event.currentTarget;
 
     onEdit({
       ...entry,
-      [id]: textContent
+      [id]: textContent,
     });
   };
 
@@ -95,18 +97,29 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit,
         >
           {entry.content || '-'}
         </div>
-        {entry.rep.type && (
+        {entry.rep && (
           <button
             className="rep-name"
             onClick={() =>
-              openRep(<RepDetails rep={entry.rep} onEdit={rep => onEdit({ ...entry, rep })} />)
+              openRep(<RepDetails rep={entry.rep} onEdit={(rep) => onEdit({ ...entry, rep })} />)
             }
           >
             {entry.rep.type}
           </button>
         )}
       </div>
-      <button className="del-btn tooltip" data-tooltip="Kustuta" onClick={() => onDelete(entry.id)}>
+      <button
+        className="del-btn tooltip"
+        data-tooltip="Kustuta"
+        onClick={() =>
+          uiStore.openModal(
+            <AlertDialog
+              title="Kas oled kindel, et soovid sissekande kustutada?"
+              buttons={[{ type: 'danger', title: 'Kustuta', onClick: () => onDelete(entry.id) }]}
+            />
+          )
+        }
+      >
         <FiTrash2 />
       </button>
     </EntryItemContainer>

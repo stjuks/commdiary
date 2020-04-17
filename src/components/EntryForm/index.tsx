@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState, useEffect } from 'react';
 import { Formik, FormikHelpers, FormikProps, useFormikContext } from 'formik';
 
 import { EntryFormContainer, MainFormFields } from './styles';
@@ -9,40 +9,27 @@ import DiaryStoreContext from '@/stores/DiaryStore';
 import { observer } from 'mobx-react-lite';
 import SelectInput from '../SelectInput';
 import RepForm from '../RepForm';
-import { RepType } from '@/types';
+import { RepType, Rep } from '@/types';
 import { useHotkeys } from '@/util/hooks';
+import reps from '@/util/reps';
 
 interface EntryFormValues {
   from: string;
   to: string;
   content: string;
-  rep?: any;
+  rep?: Rep;
 }
 
 const initialValues: EntryFormValues = {
   from: '',
   to: '',
   content: '',
-  rep: {
-    type: undefined,
-  },
+  rep: undefined,
 };
 
 const validationSchema = yup.object({
   content: yup.string(),
 });
-
-const repOptions: RepType[] = [
-  'MIST',
-  'CONTACTREP',
-  'QUICKSITREP',
-  'JAMREP',
-  'INTREP',
-  'AAREP',
-  'NINELINER',
-  'BOMBREP',
-  'RECOVERYREQ',
-];
 
 const EntryForm: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
@@ -67,7 +54,8 @@ const EntryForm: React.FC = observer(() => {
 
 const EntryFormComponent: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
-  const { handleSubmit, values, setValues, resetForm } = useFormikContext<any>();
+  const [repType, setRepType] = useState<undefined | RepType>(undefined);
+  const { handleSubmit, values, setValues, resetForm } = useFormikContext<EntryFormValues>();
   const contentInputRef = useRef<HTMLInputElement>(null);
 
   const focusContentInput = () => {
@@ -76,15 +64,16 @@ const EntryFormComponent: React.FC = observer(() => {
     }
   };
 
-  const onSubmit = (event) => {
-    handleSubmit(event);
-    focusContentInput();
+  const handleRepChange = (type: RepType) => {
+    if (!type || (values.rep && values.rep.type === type)) {
+      setValues({ ...values, rep: undefined });
+      setRepType(undefined);
+    } else if (type) {
+      setValues({ ...values, rep: { type } });
+      setRepType(type);
+    }
   };
 
-  const displayRep = (type: RepType) => {
-    if (values.rep?.type === type) setValues({ ...values, rep: { type: undefined } });
-    else setValues({ ...values, rep: { type } });
-  };
 
   const selectPreviousRecipients = (switchRecipients?: boolean) => {
     const diary = diaryStore.activeDiary;
@@ -104,20 +93,31 @@ const EntryFormComponent: React.FC = observer(() => {
     }
   };
 
+  const onSubmit = (event) => {
+    handleSubmit(event);
+    setRepType(undefined);
+    focusContentInput();
+  };
+
+  const handleClear = () => {
+    resetForm();
+    setRepType(undefined);
+  };
+
   useHotkeys(
     {
-      'control+shift+c, meta+shift+c': () => displayRep('CONTACTREP'),
-      'control+shift+m, meta+shift+m': () => displayRep('MIST'),
-      'control+shift+j, meta+shift+j': () => displayRep('JAMREP'),
-      'control+shift+s, meta+shift+s': () => displayRep('QUICKSITREP'),
-      'control+shift+i, meta+shift+i': () => displayRep('INTREP'),
-      'control+shift+a, meta+shift+a': () => displayRep('AAREP'),
-      'control+shift+9, meta+shift+9': () => displayRep('NINELINER'),
-      'control+shift+b, meta+shift+b': () => displayRep('BOMBREP'),
-      'control+shift+r, meta+shift+r': () => displayRep('RECOVERYREQ'),
+      'control+shit+c, meta+shift+c': () => handleRepChange('CONTACTREP'),
+      'control+shift+m, meta+shift+m': () => handleRepChange('MIST'),
+      'control+shift+j, meta+shift+j': () => handleRepChange('JAMREP'),
+      'control+shift+s, meta+shift+s': () => handleRepChange('SITREP'),
+      'control+shift+i, meta+shift+i': () => handleRepChange('INTREP'),
+      'control+shift+a, meta+shift+a': () => handleRepChange('AAREP'),
+      'control+shift+9, meta+shift+9': () => handleRepChange('NINELINER'),
+      'control+shift+b, meta+shift+b': () => handleRepChange('BOMBREP'),
+      'control+shift+r, meta+shift+r': () => handleRepChange('RECOVERYREQ'),
       'shift+arrowup, shift+arrowup': () => selectPreviousRecipients(true),
       arrowup: selectPreviousRecipients,
-      arrowdown: resetForm,
+      arrowdown: handleClear,
     },
     [values]
   );
@@ -128,9 +128,9 @@ const EntryFormComponent: React.FC = observer(() => {
         <div className="short-fields">
           <SelectInput
             label="REP"
-            name="rep.type"
-            onChange={(type, form) => form.setFieldValue('rep', { type })}
-            options={repOptions}
+            value={repType}
+            onChange={handleRepChange}
+            options={Object.keys(reps).map((key) => key)}
             optionLabel={(option) => option}
             style={{ width: '5rem' }}
           />
@@ -141,7 +141,7 @@ const EntryFormComponent: React.FC = observer(() => {
           <TextInput name="content" ref={contentInputRef} label="Sisu" style={{ flex: 1 }} />
         </div>
       </MainFormFields>
-      <RepForm type={values.rep?.type} />
+      <RepForm structure={repType ? reps[repType] : undefined} />
       <Button type="submit" title="Loo sissekanne" />
     </EntryFormContainer>
   );

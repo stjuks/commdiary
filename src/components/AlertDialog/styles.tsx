@@ -10,17 +10,17 @@ export const AlertDialogContainer = styled.div`
       line-height: 2rem;
       font-size: 1.25rem;
       font-weight: 700;
-      padding: 1rem;
+      padding-bottom: 1rem;
     }
 
     .description {
       line-height: 1.75rem;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 0;
       color: ${theme.colors.white.opacity(0.75)};
     }
 
     .buttons {
-      padding: 1rem;
+      padding-top: 1rem;
       display: flex;
 
       flex-direction: column;

@@ -12,7 +12,7 @@ interface DialogButton {
 interface AlertDialogProps {
   buttons: DialogButton[];
   title: string;
-  description: string;
+  description?: string;
 }
 
 const AlertDialog: React.FC<AlertDialogProps> = ({ buttons, title, description }) => {
@@ -35,7 +35,7 @@ const AlertDialog: React.FC<AlertDialogProps> = ({ buttons, title, description }
     <>
       <AlertDialogContainer className="modal-body">
         <div className="title">{title}</div>
-        <div className="description">{description}</div>
+        {description && <div className="description">{description}</div>}
         <div className="buttons">
           {buttons.map((button) => (
             <button

@@ -23,7 +23,7 @@ export const RepFormContainer = styled.div`
         display: flex;
       }
 
-      .sub-row {
+      .sub-fields {
         border-left: 1px solid ${theme.colors.white.opacity(0.1)};
         padding-left: 1rem;
         margin-left: 0.75rem;

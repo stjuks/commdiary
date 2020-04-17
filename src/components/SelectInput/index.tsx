@@ -5,9 +5,10 @@ import { FieldProps, Field, FormikProps } from 'formik';
 import { isJson } from '@/util/helpers';
 
 interface SelectInputProps {
-  name: string;
+  name?: string;
   label: string;
   options: any[];
+  value?: any;
   optionLabel: (option: any) => string;
   optionValue?: (option: any) => any;
   onChange?: (value: any, form: FormikProps<any>) => any;
@@ -21,6 +22,7 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
   options,
   optionLabel,
   optionValue,
+  value,
   style,
   onChange
 }) => {
@@ -46,7 +48,7 @@ const SelectInputComponent: React.FC<SelectInputProps & FieldProps> = ({
         {label}
       </label>
       <div className="input-field">
-        <select onChange={handleChange} id={field.name} value={field.value || ''}>
+        <select onChange={handleChange} id={field.name} value={value || field.value || ''}>
           <option value=""></option>
           {options.map(option => (
             <option

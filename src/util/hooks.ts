@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 
-export const usePrevious = value => {
+export const usePrevious = (value) => {
   const ref = useRef();
 
   useEffect(() => {
@@ -20,13 +20,13 @@ export const useHotkeys = (keyBinds: KeybindMap, deps: any[]) => {
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      const key = event.key.toLowerCase();
+      let key = event.key.toLowerCase();
 
       const tempKeyString = [...pressedKeys, key].join('+');
       if (hotkeys[tempKeyString]) event.preventDefault();
 
       if (pressedKeys.indexOf(key) === -1) {
-        setPressedKeys(keys => [...keys, key]);
+        setPressedKeys((keys) => [...keys, key]);
       }
     },
     [pressedKeys]
@@ -44,7 +44,7 @@ export const useHotkeys = (keyBinds: KeybindMap, deps: any[]) => {
     const hotkeyMap = {};
 
     Object.entries(keyBinds).forEach(([key, value]) => {
-      key.split(',').forEach(bind => (hotkeyMap[bind.trim()] = value));
+      key.split(',').forEach((bind) => (hotkeyMap[bind.trim()] = value));
     });
 
     setHotkeys(hotkeyMap);

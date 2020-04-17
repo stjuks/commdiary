@@ -3,40 +3,55 @@ import styled from '@/util/styled';
 export const RepDetailsContainer = styled.div`
   ${({ theme }) => ` 
     color: ${theme.colors.white.opacity(0.9)};
-    
-    .detail-container {
-      min-width: 10rem;
-    }
+    min-width: 18rem;
 
-    .detail-value {
-      font-weight: 700;
-      padding: 0.5rem 0;
-      min-height: 1rem;
-    }
-
-    .detail-label,
+    .field,
+    .sub-fields,
     .sub-label {
-      white-space: nowrap;
-      padding: 0.5rem 0;
+      :not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+
+    .sub-fields {
+      margin-left: 0.25rem;
+      padding-left: 1rem;
+      border-left: 1px solid ${theme.colors.white.opacity(0.1)};
+    }
+
+    .sub-label,
+    .field-label {
       font-size: 0.875rem;
       color: ${theme.colors.white.opacity(0.5)};
     }
 
-    .detail-label {
-      padding-bottom: 0.25rem;
+    .field-value {
+      font-weight: 700;
     }
 
-    .detail-row {
-      border-left: 1px solid ${theme.colors.white.opacity(0.1)};
-      margin-left: 0.25rem;
-      display: flex;
-      flex-wrap: wrap;
-      padding-left: 0.5rem;
+    .field-label {
+      margin-bottom: 0.5rem;
+    }
 
-      .detail-container {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-        flex: 1;
+    [contentEditable=true] {
+      position: relative;
+      cursor: pointer;
+
+      :hover,
+      :focus {
+        :before {
+          transform: translate(-50%, -50%);
+          top: 50%;
+          left: 50%;
+          padding: 0.25rem;
+          border-radius: 0.25rem;
+          background: ${theme.colors.accent.opacity(0.05)};
+          z-index: 0;
+          content: '';
+          position: absolute;
+          height: 100%;
+          width: 100%;
+        }
       }
     }
   `}
