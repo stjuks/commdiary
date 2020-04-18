@@ -28,7 +28,9 @@ export const TextInputContainer = styled.div`
       }
 
       input, select {
-        flex: 1;
+        height: 19px;
+        line-height: 19px;
+        box-sizing: content-box;
         padding: 0.5rem 0;
         font-size: 1rem;
         font-weight: 500;

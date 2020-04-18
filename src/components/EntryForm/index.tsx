@@ -74,7 +74,6 @@ const EntryFormComponent: React.FC = observer(() => {
     }
   };
 
-
   const selectPreviousRecipients = (switchRecipients?: boolean) => {
     const diary = diaryStore.activeDiary;
 
@@ -132,10 +131,9 @@ const EntryFormComponent: React.FC = observer(() => {
             onChange={handleRepChange}
             options={Object.keys(reps).map((key) => key)}
             optionLabel={(option) => option}
-            style={{ width: '5rem' }}
           />
-          <TextInput name="to" label="Kellele" style={{ width: '5rem' }} />
-          <TextInput name="from" label="Kellelt" style={{ width: '5rem' }} />
+          <TextInput name="to" label="Kellele" />
+          <TextInput name="from" label="Kellelt" />
         </div>
         <div className="content-field">
           <TextInput name="content" ref={contentInputRef} label="Sisu" style={{ flex: 1 }} />

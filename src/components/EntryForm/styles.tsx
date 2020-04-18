@@ -16,12 +16,11 @@ export const MainFormFields = styled.div`
   padding: 0.5rem 0.5rem 0 0.5rem;
 
   .short-fields {
-    min-width: 20rem;
+    min-width: 18rem;
     display: flex;
     flex: 1;
-    flex-shrink: 0;
 
-    .input-container { flex: 1; }
+    .input-container { width: calc(100% / 3); }
   }
 
   .content-field {
@@ -30,9 +29,9 @@ export const MainFormFields = styled.div`
 
   .input-container {
     padding: 0.5rem;
+    box-sizing: border-box;
   }
 
   @media only screen and (min-width: 540px) {
-    .short-fields { max-width: 20rem; }
   }
 `
