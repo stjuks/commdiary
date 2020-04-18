@@ -4,7 +4,6 @@ export interface RepFormField {
   name: string;
   letter: string;
   label: string;
-  columns?: RepFormField[];
   subFields?: RepFormField[];
 }
 
@@ -234,32 +233,6 @@ const reps: { [key in RepType]: RepFormStructure } = {
       },
       { name: 'situation', letter: 'C', label: 'Ülesannete täitmise olukord' },
       { name: 'other', letter: 'E', label: 'Muu' },
-    ],
-  },
-  PERSREP: {
-    type: 'PERSREP',
-    fields: [
-      {
-        name: 'staff',
-        letter: 'A',
-        label: 'Tegevväelased ja tsiviilpersonal',
-        columns: [
-          { name: 'enlisted', letter: 'F', label: 'Nimekirjas' },
-          { name: 'inService', letter: 'G', label: 'Teenistuses' },
-          { name: 'inDeployment', letter: 'H', label: 'Teenistuses' },
-          { name: 'vacation', letter: 'I', label: 'I - Puhkusel' },
-          { name: 'ill', letter: 'J', label: 'J - Haiged' },
-          { name: 'other', letter: 'K', label: 'K - Muu' },
-        ],
-        subFields: [
-          { name: 'officers', letter: '1', label: 'Ohvitserid' },
-          { name: 'nonCommOfficers', letter: '2', label: 'Allohvitserid' },
-          { name: 'soldiers', letter: '3', label: 'Sõdurid' },
-          { name: 'civilians', letter: '4', label: 'Tsiviilisikud' },
-          { name: 'staffSum', letter: '5', label: 'Tegevväelasi kokku' },
-          { name: 'sum', letter: '6', label: 'Kokku' },
-        ],
-      },
     ],
   },
 };

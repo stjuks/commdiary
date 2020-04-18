@@ -25,24 +25,9 @@ type RepType =
   | 'BOMBREP'
   | 'RECOVERYREQ'
   | 'SITREP'
-  | 'ENGSITREP'
-  | 'PERSREP';
+  | 'ENGSITREP';
 
 export interface Rep {
   type: RepType;
   [key: string]: string | object;
-}
-
-export interface MISTRep extends Rep {
-  type: 'MIST';
-  mechanism: string;
-  injuries: string;
-  signs: {
-    a: string;
-    b: string;
-    c: string;
-    d: string;
-    e: string;
-  };
-  treatment: string;
 }
