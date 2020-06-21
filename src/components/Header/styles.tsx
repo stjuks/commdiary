@@ -74,6 +74,12 @@ export const HeaderContainer = styled.div`
       .btn:not(:last-child) {
         margin-right: 1rem;
       }
+
+      @media (max-width: 560px) {
+        .info-btn {
+          display: none;
+        }
+      }
     }
   `}
 `;

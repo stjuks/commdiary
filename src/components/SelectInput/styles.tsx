@@ -10,6 +10,7 @@ export const SelectInputContainer = styled(TextInputContainer)`
 
     select {
       padding-right: 1.5rem;
+      width: 100%;
 
       option {
         color: black;

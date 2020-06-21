@@ -13,7 +13,6 @@ import AlertDialog from '../AlertDialog';
 
 const EntryList: React.FC = observer(() => {
   const diaryStore = useContext(DiaryStoreContext);
-  const uiStore = useContext(UIStoreContext);
 
   const listLength = diaryStore.activeDiary?.entries.length || 0;
 
@@ -36,7 +35,6 @@ const EntryList: React.FC = observer(() => {
           key={entry.id}
           onDelete={diaryStore.deleteEntry}
           onEdit={diaryStore.editEntry}
-          openRep={uiStore.openModal}
         />
       ))}
     </EntryListContainer>
@@ -47,11 +45,11 @@ interface EntryItemProps {
   entry: DiaryEntry;
   onDelete: (id: number) => any;
   onEdit: (entry: DiaryEntry) => any;
-  openRep: (modal: React.ReactElement) => any;
 }
 
-const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit, openRep }) => {
+const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit }) => {
   const uiStore = useContext(UIStoreContext);
+
   const handleEdit = (event: React.FocusEvent<HTMLDivElement>) => {
     const { id, textContent } = event.currentTarget;
 
@@ -101,7 +99,11 @@ const EntryItem: React.FC<EntryItemProps> = observer(({ entry, onDelete, onEdit,
           <button
             className="rep-name"
             onClick={() =>
-              openRep(<RepDetails rep={entry.rep} onEdit={(rep) => onEdit({ ...entry, rep })} />)
+              entry.rep
+                ? uiStore.openModal(
+                    <RepDetails rep={entry.rep} onEdit={(rep) => onEdit({ ...entry, rep })} />
+                  )
+                : null
             }
           >
             {entry.rep.type}

@@ -24,6 +24,7 @@ export const MainFormFields = styled.div`
   }
 
   .content-field {
+    min-width: 10rem;
     flex: 1;
   }
 

@@ -51,7 +51,6 @@ export const DiaryTableContainer = styled.div`
     page-break-inside: avoid;
   }
 
-  .row-wrapper:nth-child(odd),
   .header {
     background: rgba(0, 0, 0, 0.05);
   }
@@ -66,7 +65,6 @@ export const DiaryTableContainer = styled.div`
   }
 
   .rep {
-    padding: 4px 8px;
 
     .field {
       display: flex;
@@ -79,7 +77,8 @@ export const DiaryTableContainer = styled.div`
 
     .field-label,
     .sub-label {
-      width: 16px;
+      flex-shrink: 0;
+      min-width: 16px;
       font-weight: 700;
     }
 

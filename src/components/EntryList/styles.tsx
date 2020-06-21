@@ -68,7 +68,8 @@ export const EntryItemContainer = styled.div`
 
     .row-2 {
       .content {
-        flex: 1;
+        word-break: break-word;
+        width: 100%;
       }
 
       .rep-name {

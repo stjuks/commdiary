@@ -1,15 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { PrintableDiariesContainer, DiaryTableContainer } from './styles';
 import { Diary, Rep } from '@/types';
-import { useParams, useLocation, RouteComponentProps, Link } from 'react-router-dom';
+import { useLocation, RouteComponentProps, Link } from 'react-router-dom';
 import DiaryStoreContext from '@/stores/DiaryStore';
 import { formatDateToDTG, getObjectProperty } from '@/util/helpers';
 import reps, { RepFormField } from '@/util/reps';
 import { FiChevronLeft } from 'react-icons/fi';
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
 
 const PrintableDiaries: React.FC<RouteComponentProps> = ({ location }) => {
   const diaryStore = useContext(DiaryStoreContext);
@@ -30,6 +26,9 @@ const PrintableDiaries: React.FC<RouteComponentProps> = ({ location }) => {
 
   return (
     <PrintableDiariesContainer>
+      <Link to="/" className="back-link">
+        <FiChevronLeft /> Tagasi
+      </Link>
       {diaries.map((diary) => (
         <DiaryTable diary={diary} key={diary.id} />
       ))}
@@ -62,9 +61,6 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
 
   return (
     <DiaryTableContainer>
-      <Link to="/" className="back-link">
-        <FiChevronLeft /> Tagasi
-      </Link>
       <h1 className="diary-name">{diary.name}</h1>
       <div className="table-container">
         <span className="row header">
@@ -83,11 +79,19 @@ const DiaryTable: React.FC<DiaryTableProps> = ({ diary }) => {
               <span>{entry.to || '-'}</span>
               <span>{entry.content || '-'}</span>
             </span>
-            {entry.rep && (
-              <div className="rep">
-                <div className="rep-title">{entry.rep.type}</div>
-                {buildRepFields(reps[entry.rep.type].fields, entry.rep)}
-              </div>
+            {entry.rep && entry.rep.type && (
+              <span className="row">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span>
+                  <div className="rep">
+                    <div className="rep-title">{entry.rep.type}</div>
+                    {buildRepFields(reps[entry.rep.type].fields, entry.rep)}
+                  </div>
+                </span>
+              </span>
             )}
           </div>
         ))}

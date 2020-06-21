@@ -13,10 +13,17 @@ class DiaryStore {
 
   constructor() {
     const activeDiaryId = loadFromLocalStorage('activeDiaryId');
-    const diaries = loadFromLocalStorage('diaries');
+    const diaries: Diary[] = loadFromLocalStorage('diaries');
 
     if (activeDiaryId) this.activeDiaryId = activeDiaryId;
-    if (diaries) this.diaries = diaries;
+    if (diaries) {
+      diaries.forEach((diary) => {
+        diary.entries.forEach((entry) => {
+          if (entry.rep && entry.rep.type === undefined) entry.rep = undefined;
+        });
+      });
+      this.diaries = diaries;
+    }
 
     window.addEventListener('storage', (event) => {
       if (event.key === 'diaries' && event.newValue) {
@@ -98,7 +105,7 @@ class DiaryStore {
   exportDiaries = async (diaryIds: number[]) => {
     const diaries = this.diaries.filter((diary) => diaryIds.includes(diary.id));
 
-    const fileName = 'Sidepäevikud.json';
+    const fileName = `${diaries.map((diary) => diary.name).join(',')}.json`;
 
     const json = JSON.stringify(diaries);
     const blob = new Blob([json], { type: 'application/json' });
